@@ -1,4 +1,5 @@
 var FUNCTIONSERVICE = {
+	var exec_video;
 	defaultHome : function($scope) {
 		console.debug("Ok, going to default view...");
         if(responsiveVoice.voiceSupport()) {
@@ -170,7 +171,7 @@ var FUNCTIONSERVICE = {
         }
 
 		/* 비디오 프로세스*/
-		var exec_video = require('child_process').exec;
+		exec_video = require('child_process').exec;
 		/* 비디오 저장될 위치 설정*/
 		var video_path = __dirname+"/public/video/"+"video"+VIDEO_INDEX+'.h264';
 		/* 라즈베리 카메라 비디오 명령*/
@@ -185,14 +186,14 @@ var FUNCTIONSERVICE = {
 		// 4초 후 음성 합성 출력
 		setTimeout(function() {
 			if(responsiveVoice.voiceSupport()) {
-				responsiveVoice.speak("비디오 촬영이 끝났습니다.","Korean Female");
+				responsiveVoice.speak("촬영 종료","Korean Female");
 			}
-		}, 4000);
+		}, 15000);
 
 	},
 	stopvideo : function(VIDEO_INDEX) {
 		console.debug("Stop Video");
-
+    exec_video.kill('SIGHUP')
 		if(responsiveVoice.voiceSupport()) {
         	responsiveVoice.speak("정지","Korean Female");
 				}
