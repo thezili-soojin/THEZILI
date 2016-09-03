@@ -262,8 +262,9 @@
             });
 
             AnnyangService.addCommand(command.stopvideo, function() {
-            	functionService.video(VIDEO_INDEX);
+            	functionService.staopvideo(VIDEO_INDEX);
         		VIDEO_INDEX++;
+            $scope.focus = "default";
             });
 
             /** Relay Switch control Light */
@@ -310,6 +311,7 @@
     			else if(androidCommand === command.news) { functionService.news($scope); }
     			else if(androidCommand === command.photo) { functionService.photo(); }
     			else if(androidCommand === command.video) { functionService.video(); }
+          else if(androidCommand === command.stopvideo) { functionService.stopvideo(); }
     			else if(androidCommand === command.lighton) { functionService.lightOn();}
     			else if(androidCommand === command.lightoff) { functionService.lightOff();}
 

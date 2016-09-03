@@ -166,7 +166,7 @@ var FUNCTIONSERVICE = {
 		console.debug("Take a Video ...");
 
 		if(responsiveVoice.voiceSupport()) {
-            responsiveVoice.speak("비디오 촬영을 시작합니다.","Korean Female");
+            responsiveVoice.speak("비디오 촬영","Korean Female");
         }
 
 		/* 비디오 프로세스*/
@@ -195,7 +195,8 @@ var FUNCTIONSERVICE = {
 
 		if(responsiveVoice.voiceSupport()) {
         	responsiveVoice.speak("정지","Korean Female");
-        }
+				}
+				//$scope.focus = "default";
 	},
 	lightOn : function() {
 		console.debug("led on...");
