@@ -1,5 +1,5 @@
 var FUNCTIONSERVICE = {
-	var exec_video;
+	//var exec_video;
 	defaultHome : function($scope) {
 		console.debug("Ok, going to default view...");
         if(responsiveVoice.voiceSupport()) {
@@ -171,7 +171,7 @@ var FUNCTIONSERVICE = {
         }
 
 		/* 비디오 프로세스*/
-		exec_video = require('child_process').exec;
+		var exec_video = require('child_process').exec;
 		/* 비디오 저장될 위치 설정*/
 		var video_path = __dirname+"/public/video/"+"video"+VIDEO_INDEX+'.h264';
 		/* 라즈베리 카메라 비디오 명령*/
@@ -193,10 +193,10 @@ var FUNCTIONSERVICE = {
 	},
 	stopvideo : function(VIDEO_INDEX) {
 		console.debug("Stop Video");
-    exec_video.kill('SIGHUP')
-		if(responsiveVoice.voiceSupport()) {
-        	responsiveVoice.speak("정지","Korean Female");
-				}
+    // var exec_video.kill('SIGHUP')
+		// if(responsiveVoice.voiceSupport()) {
+    //     	responsiveVoice.speak("정지","Korean Female");
+		// 		}
 				//$scope.focus = "default";
 	},
 	lightOn : function() {
