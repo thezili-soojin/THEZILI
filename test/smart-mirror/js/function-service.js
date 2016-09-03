@@ -129,31 +129,35 @@ var FUNCTIONSERVICE = {
 		var photo_path = __dirname+"/public/photo/"+"photo"+PHOTO_INDEX+'.jpg';
 
 		/* 라즈베리 카메라 촬영 명령*/
-		var cmd_photo = 'raspistill -t 6000 -o '+photo_path;
+		var cmd_photo = 'raspistill -t 7000 -o '+photo_path;
 		exec_photo(cmd_photo, function(error, stdout, stderr){
 			if(responsiveVoice.voiceSupport()) {
-				responsiveVoice.speak("찰칵","Korean Female");
+				responsiveVoice.speak("촬영 종료","Korean Female");
 			}
 			console.log('Photo Saved : ',photo_path);
 			require('./js/mailer').sendEmail(photo_path);
 		});
-
+		setTimeout(function() {
+			if(responsiveVoice.voiceSupport()) {
+				responsiveVoice.speak("찰칵","Korean Female");
+			}
+		}, 6500);
 		// 4초 후 음성 합성 출력
 		setTimeout(function() {
 			if(responsiveVoice.voiceSupport()) {
-				responsiveVoice.speak("쓰리","Korean Female");
+				responsiveVoice.speak("three","US English Female");
 			}
-			setTimeout(function() {
-				if(responsiveVoice.voiceSupport()) {
-					responsiveVoice.speak("투","Korean Female");
-				}
-				setTimeout(function() {
-					if(responsiveVoice.voiceSupport()) {
-						responsiveVoice.speak("원","Korean Female");
-					}
-				}, 1000);
-			}, 1000);
 		}, 2000);
+		setTimeout(function() {
+			if(responsiveVoice.voiceSupport()) {
+				responsiveVoice.speak("two","US English Female");
+			}
+		}, 4000);
+		setTimeout(function() {
+			if(responsiveVoice.voiceSupport()) {
+				responsiveVoice.speak("one","US English Female");
+			}
+		}, 5500);
 
 
 
@@ -170,7 +174,7 @@ var FUNCTIONSERVICE = {
 		/* 비디오 저장될 위치 설정*/
 		var video_path = __dirname+"/public/video/"+"video"+VIDEO_INDEX+'.h264';
 		/* 라즈베리 카메라 비디오 명령*/
-		var cmd_video = 'raspivid -o '+video_path+' -t 4000';
+		var cmd_video = 'raspivid -o '+video_path+' -t 15000';
 
 		/* 라즈베리 카메라 비디오 촬영 및 이메일 전송*/
 		exec_video(cmd_video, function(errror, stdout, stderr) {
@@ -185,6 +189,13 @@ var FUNCTIONSERVICE = {
 			}
 		}, 4000);
 
+	},
+	stopvideo : function(VIDEO_INDEX) {
+		console.debug("Stop Video");
+
+		if(responsiveVoice.voiceSupport()) {
+        	responsiveVoice.speak("정지","Korean Female");
+        }
 	},
 	lightOn : function() {
 		console.debug("led on...");

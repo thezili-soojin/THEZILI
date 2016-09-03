@@ -24,6 +24,7 @@ var COMMANDS  = { "en" : {
   "news" : "Show me news",
   "photo" : "Take a photo",
   "video" : "Take a video",
+  "stopvideo" : "stop a video",
   "lighton" : "Light on",
   "lightoff" : "Light off"
 },
@@ -53,6 +54,7 @@ var COMMANDS  = { "en" : {
     "news" : "뉴스 보여 줘",
     "photo" : "사진 촬영",
     "video" : "비디오 촬영",
+    "stopvideo" : "비디오 종료",
 	"lighton" : "불 켜",
 	"lightoff" : "불 꺼"
   }
