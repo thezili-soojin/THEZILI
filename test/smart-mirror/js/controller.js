@@ -264,7 +264,7 @@
             AnnyangService.addCommand(command.stopvideo, function() {
             	functionService.staopvideo(VIDEO_INDEX);
         		VIDEO_INDEX++;
-            //$scope.focus = "default";
+            $scope.focus = "default";
             });
 
             /** Relay Switch control Light */

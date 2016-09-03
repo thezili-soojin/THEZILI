@@ -193,6 +193,9 @@ var FUNCTIONSERVICE = {
 	},
 	stopvideo : function(VIDEO_INDEX) {
 		console.debug("Stop Video");
+		if(responsiveVoice.voiceSupport()) {
+         	responsiveVoice.speak("stop","US English Female");
+		 }
     // var exec_video.kill('SIGHUP')
 		// if(responsiveVoice.voiceSupport()) {
     //     	responsiveVoice.speak("정지","Korean Female");
