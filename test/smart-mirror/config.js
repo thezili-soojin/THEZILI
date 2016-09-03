@@ -4,17 +4,17 @@ var config = {
     greeting : ["SmartMirror"], // An array of greetings to randomly choose from
     // forcast.io
     forcast : {
-        key : "62255a23499f1952654ba0edd5981aa4", // Your forcast.io api key
+        key : "", // Your forcast.io api key
         units : "auto" // See forcast.io documentation if you are getting the wrong units
     },
     // Calendar (An array of iCals)
     calendar: {
-      icals : ["https://calendar.google.com/calendar/ical/thezili.soojin%40gmail.com/private-132620e6dfc6e0c2300b20a8c57af898/basic.ics"],
+      icals : [""],
       maxResults: 9, // Number of calender events to display (Defaults is 9)
       maxDays: 365 // Number of days to display (Default is one year)
     },
     traffic: {
-      key : "AtybLUCsarX2X09PVrcR_TMtC3jQGWVT5r2bIGpuE4Nxpo5pkkyyYtc27UEx_93k", // Bing Maps API Key
+      key : "", // Bing Maps API Key
       mode : "Transit", // Possibilities: Driving / Transit / Walking
       origin : "Yangjae", // Start of your trip. Human readable address.
       destination : "Suwon", // Destination of your trip. Human readable address.
@@ -27,7 +27,7 @@ var config = {
     },
 
     subway: {
-      key:"5757454e7365756e373765636b4f42"
+      key:""
     },
     soundcloud: {
     	key:""
