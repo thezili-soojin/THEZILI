@@ -1,6 +1,4 @@
 
-a : " AIzaSyA9Yl4jMQd3omNKfuA9SOqUzn-gek2i18c"
-
-c : "608630183663-kcdi97qj26fqhrebpmhn2gkqcmkkooak.apps.googleusercontent.com"
-
-s : "QWOqts_3LSa8FT_IHcsoRK-L"
+export GOOGLE_API_KEY="AIzaSyA9Yl4jMQd3omNKfuA9SOqUzn-gek2i18c"
+export GOOGLE_DEFAULT_CLIENT_ID="608630183663-kcdi97qj26fqhrebpmhn2gkqcmkkooak.apps.googleusercontent.com"
+export GOOGLE_DEFAULT_CLIENT_SECRET="QWOqts_3LSa8FT_IHcsoRK-L"
