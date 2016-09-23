@@ -2,68 +2,66 @@
     'use strict';
 
     function SoundCloudService($http) {
-
-	console.log("@@ 1_Called SoundCloudService");
-
+		console.log("soundcloud.js == 1_SoundCloudService");
+		
         var service = {};
         var intv,
-            audio = document.querySelector('audio');
-            audiosource = new SoundCloudAudioSource(audio);
+            audio = document.querySelector('audio'),
+            audiosource = null;
+            console.log("soundcloud.js == 2_create SoundCloudAudioSource");
 
-		    service.scResponse = null;
-		    console.log("@@ 2_Called SoundCloudService");
+		service.scResponse = null;
 
-		    service.init = function() {
-			console.log("@@ 3_Called SoundCloudService");
-
-        // If the soundcloud key is defined and not empty
-        if(typeof config.soundcloud != 'undefined' && config.soundcloud.length) {
-		console.log("@@ 4_Called SoundCloudService");
-			SC.initialize({
-			client_id: config.soundcloud.key
-          });
-      }
-   }
+		service.init = function() {
+			console.log("soundcloud.js == 3_service.init");
+			
+			//audiosource = new SoundCloudAudioSource(audio);
+			
+			// If the soundcloud key is defined and not empty
+			if(typeof config.soundcloud != 'undefined' && config.soundcloud.length) {
+				SC.initialize({
+					client_id: config.soundcloud.key
+				});
+			}
+		}
 
         //Returns the soundcloud search results for the given query
         service.searchSoundCloud = function(query) {
-            console.log("@@ Called SoundCloudService.searchSoundCloud");
-
-            return $http.get('https://api.soundcloud.com/tracks.json?client_id=' + config.soundcloud.key + '&q=' + query + '&limit=2').
-                then(function(response) {
-                    service.scResponse = response.data;
-
-					          console.debug("SoundCloud link: ", service.scResponse[0].permalink_url);
-                    var streamUrl = service.scResponse[0].stream_url + '?client_id=' + config.soundcloud.key;
-                    audio.setAttribute('src', streamUrl);
-					          return service.scResponse;
+			
+            return $http.get('https://api.soundcloud.com/tracks.json?client_id=' + config.soundcloud.key + '&q=' + query + '&limit=2').then(function(response) {
+				service.scResponse = response.data;
+				console.debug("SoundCloud link: ", service.scResponse[0].permalink_url);
+				service.scResponse[0].permalink_url = 'https://soundcloud.com/roywoodsofficial/all-of-you'
+				var streamUrl = service.scResponse[0].stream_url + '?client_id=' + config.soundcloud.key;
+				console.log('SoundCloud streamUrl = ' + streamUrl);
+				
+				//audio.setAttribute('src', streamUrl);
+				return service.scResponse;
                 });
-        };
+			};
 
         service.play = function(){
-          console.log("@@ Called SoundCloudService.play");
-
-          audio.play();
-          intv = setInterval(function(){ audiosource.draw() }, 1000 / 30);
+          //audio.play();
+          //intv = setInterval(function(){ audiosource.draw() }, 1000 / 30);
         };
 
         service.pause = function(){
-          console.log("@@ Called SoundCloudService.pause");
-          audio.pause();
-          clearInterval(intv);
+          //audio.pause();
+          //clearInterval(intv);
         };
 
         service.replay = function(){
-          audio.currentTime = 0;
-          audio.pause();
-          audio.play();
-          intv = setInterval(function(){ audiosource.draw() }, 1000 / 30);
+          //audio.currentTime = 0;
+          //audio.pause();
+          //audio.play();
+          //intv = setInterval(function(){ audiosource.draw() }, 1000 / 30);
         };
 
         return service;
     }
 
     var SoundCloudAudioSource = function(audio){
+      /*
       var self = this;
       var audioCtx = new (window.AudioContext || window.webkitAudioContext);
       var source = audioCtx.createMediaElementSource(audio);
@@ -82,9 +80,10 @@
         analyser.getByteTimeDomainData(this.dataArray);
         drawCanvas(this.dataArray,this.bufferLength);
       };
-
+      */
     }
-
+     
+      
     function drawCanvas(dataArray,bufferLength){
       var canvas = document.getElementById('visualizer');
       var canvasCtx = canvas.getContext("2d");

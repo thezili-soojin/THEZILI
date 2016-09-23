@@ -20,7 +20,7 @@
 	<!-- responsivevoice.js -->
 	<script src="http://code.responsivevoice.org/responsivevoice.js"></script>
 	<!--  Sound Cloud -->
-	<script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+	<script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
 
 	<!-- App -->
 	<script src="js/app.js"></script>
@@ -49,8 +49,8 @@
 	<script src="js/subway-service.js"></script>
 	<!-- Gmail Node Mailer -->
 	<script src="js/mailer.js"></script>
-	<!-- SoundCloud -->
-	<script src="js/soundcloud.js"></script>
+	<!-- SoundCloud, music API-->
+	<script src="js/soundcloud-service.js"></script>
 
 	<!--  Notification -->
 	<script type="text/javascript">
@@ -109,6 +109,7 @@
     	});
    	</script>
 
+
 	<script>
 	  window.$ = window.jQuery =require('./js/jquery-2.2.2.min.js');
 	  $(function(){
@@ -120,6 +121,8 @@
 	  });
 	</script>
 
+
+
 <!-- Styles and Resources -->
 <link rel="shortcut icon" href="favicon.ico" />
 <link
@@ -130,129 +133,82 @@
 
 </head>
 <!-- 1-call -->
-<body ng-controller="MirrorCtrl as commands" ng-cloak="">
-	<div class="wrap">
-		<!-- Time Layout-->
-		<div class="top-right">
-			<div class="time">{{date | date : 'h:mm:ss a'}}</div>
-			<div class="date grey">{{date | date : 'EEE, MMM dd '}}</div>
-		</div>
-	
-		<!-- Weather Layout-->
-		<div class="top">
-			<div class="weather">
-				<div id="weather-sidebar" class="fade" ng-show="focus == 'default'"></div>
-				<div>
-					<div class="weather-today">
-						<div id="titleWeather">
-							<span>TODAY'S WEATHER</span>
-						</div>
-						<div class="temp_wrap">
-							<span class="icon dimmed wi {{currentForcast.wi}}"></span> 
-							<span class="tempreture">{{currentForcast.temperature}}</span> <span class="degree">&deg;</span>
-						</div>
-					</div>
-					<div class="weather-week-descriptor fade" ng-show="focus == 'default'">
-						<div class="weather-week-descriptor">
-							<!-- UI를 위해 생략
-					                <span>{{hourlyForcast.summary}}</span>
-		              				<span>{{weeklyForcast.summary}}</span> -->
-						</div>
-						<div class="weather-week" ng-repeat="forcast in weeklyForcast.data"
-							ng-if="$index > 0">
-							<div class="weather-week-day">
-								<span class="day light-grey">{{forcast.day}}</span> <span
-									class="icon-small dimmed wi {{forcast.wi}}"></span> <span
-									class="tempreture tempreture-min">{{forcast.temperatureMin}}&deg;</span>/
-								<span class="tempreture tempreture-max">{{forcast.temperatureMax}}&deg;</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="middle-center">
-				
-				<div class="greeting hidden" ng-show="focus == 'default'">
-					<h1>{{greeting}}</h1>
-					<div class="interim-result" ng-bind="interimResult"></div>
-					<div class='hole'>
-						<i></i> <i></i> <i></i> <i></i> <i></i> <i></i> <i></i> <i></i> <i></i>
-						<i></i>
-					</div>
-				</div>
-				<!-- 
-				<div class="contents-box sc-container animate-grow" ng-show="focus == 'default'">
-				  <audio id="player" controls="" autoplay="" preload autobuffer style="display: none"></audio>
-				  <div><canvas id="visualizer" width="300" height="150"></canvas></div>
-				  <img class="sc" ng-src="{{scThumb}}"/>
-				  <img class="scWaveform" ng-src="{{scWaveform}}"/>
-				  <h2 class="sc" ng-bind="scTrack"></h2>
-				</div>
-				
-				<div class="listening" ng-show="listening">Ready: {{focus}}</div> -->
-				
-				<div class="contents-box animate-grow" ng-show="focus == 'whoissmartmirror'">
-					<img id="whoissmartmirror" src="image/whoissmartmirror.PNG" />
-				</div>
-				
-				<div class="contents-box map animate-grow" ng-show="focus == 'map'">
-					<img class="contents map animate-grow" ng-src="{{map}}" />
-				</div>
-				
-				<div class="youtube-container animate-grow"
-					ng-show="focus == 'youtube'">
-					<iframe id="youtube_player" class="yt_player_iframe" width="100%"
-						height="90%" ng-src="{{currentYoutubeUrl}}" allowfullscreen="true"
-						allowscriptaccess="always" frameborder="0"></iframe>
-				</div>
-				
-				<div class="news-container news animate-grow" ng-show="focus == 'news'">
-					<div class="news-title">TODAY'S NEWS</div>
-					<div id="news-div" ></div>
-				</div>
-	
-				<div class="subwayInfo-container animate-grow"
-					ng-show="focus == 'subway'">
-					<p class="subwayInfo">{{subwayinfo1}}</p>
-					<p class="subwayInfo">{{subwayinfo2}}</p>
-					<p class="subwayInfo">{{subwayinfo3}}</p>
-					<p class="subwayInfo">{{subwayinfo4}}</p>
-				</div>
-				
-			</div>
+<body ng-controller="MirrorCtrl as commands">
 
-			<div class="bottom-center">
-				<div class="bottom-right"><!-- 하단부 오른쪽  --></div>
-		
-				<div class="bottom-left">
-					<!-- 하단부 왼쪽 핸드폰 페어링 -->
-					<!-- 안드로이드와 통신하여 Notification (전화,Facebook,카카오톡,문자, 메일)을 받습니다. -->
-					<div id="titleNoti" class="calendar_wrap">
-		
-						<div id="titleCalendar" >
-							<span>SCHEDULE</span><br>
+	<!-- Time Layout-->
+	<div class="top-right">
+		<div class="time">{{date | date : 'h:mm:ss a'}}</div>
+		<div class="date grey">{{date | date : 'MMM dd EEE'}}</div>
+	</div>
+
+	<!-- Weather Layout-->
+	<div class="top">
+		<div class="weather">
+			<div id="weather-sidebar" class="fade" ng-show="focus == 'default'"></div>
+			<div>
+				<div class="weather-today">
+					<div id="titleWeather">
+						<span>오늘 날씨</span><br>
+					</div>
+					<span class="icon dimmed wi {{currentForcast.wi}}"></span>
+					<span class="tempreture">{{currentForcast.temperature}}&deg;</span>
+				</div>
+				<div class="weather-week-descriptor fade" ng-show="focus == 'default'">
+					<div class="weather-week-descriptor">
+						<!-- UI를 위해 생략
+	              <span>{{hourlyForcast.summary}}</span>
+	              <span>{{weeklyForcast.summary}}</span> -->
+					</div>
+					<div class="weather-week" ng-repeat="forcast in weeklyForcast.data"
+						ng-if="$index > 0">
+						<div class="weather-week-day">
+							<span class="day light-grey">{{forcast.day}}</span> <span
+								class="icon-small dimmed wi {{forcast.wi}}"></span> <span
+								class="tempreture tempreture-min">{{forcast.temperatureMin}}&deg;</span>
+							<span class="tempreture tempreture-max">{{forcast.temperatureMax}}&deg;</span>
 						</div>
-						
-						<ul class="calendar" ng-show="focus == 'default'">
-							<li class="event" ng-repeat="event in calendar">
-								<div class="event-details">
-									<span class="day">{{event.start.format('ddd') |
-									uppercase}}</span> <span class="summary">{{event.SUMMARY}}</span>
-									<div class="details">{{event.start.format('MMMM Do YYYY, h:mm:ss a')}}</div>
-								</div>
-							</li>
-						</ul>
 					</div>
 				</div>
-				
-				<!--<div class="result2" ng-bind="interimResult"></div>-->
-		    </div>
-		    
-			<!-- Command list : commands-->
-			<div class="commands animate-grow" ng-show="focus == 'commands'" > 
-				<h3>사용 가능한 명령</h3>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="container">
+		<div class="middle-center">
+			<div class="greeting hidden" ng-show="focus == 'default'">
+				<h1>{{greeting}}</h1>
+				<div class='hole'>
+					<i></i> <i></i> <i></i> <i></i> <i></i> <i></i> <i></i> <i></i> <i></i>
+					<i></i>
+				</div>
+			</div>
+			<!-- <div class="listening" ng-show="listening">Ready: {{focus}}</div> -->
+			<div class="contents-box animate-grow" ng-show="focus == 'whoissmartmirror'">
+				<img id="whoissmartmirror" src="image/whoissmartmirror.PNG" />
+			</div>
+			<div class="contents-box map animate-grow" ng-show="focus == 'map'">
+				<img class="contents map animate-grow" ng-src="{{map}}" />
+			</div>
+			<div class="youtube-container animate-grow"
+				ng-show="focus == 'youtube'">
+				<iframe id="youtube_player" class="yt_player_iframe" width="100%"
+					height="90%" ng-src="{{currentYoutubeUrl}}" allowfullscreen="true"
+					allowscriptaccess="always" frameborder="0"></iframe>
+			</div>
+			<div id="news-div" class="news-container news animate-grow" ng-show="focus == 'news'"></div>
+
+			<div class="subwayInfo-container animate-grow"
+				ng-show="focus == 'subway'">
+				<p class="subwayInfo">{{subwayinfo1}}</p>
+				<p class="subwayInfo">{{subwayinfo2}}</p>
+				<p class="subwayInfo">{{subwayinfo3}}</p>
+				<p class="subwayInfo">{{subwayinfo4}}</p>
+			</div>
+		</div>
+		<div class="bottom-center">
+			<!-- Command list -->
+			<div class="commands animate-grow" ng-show="focus == 'commands'">
+				<h3>[ 사용 가능한 명령 ]</h3>
 				<dl>
 					<!-- <dt> IP : {{ipAddress}}</dt> -->
 					<dt>명령 메뉴</dt>
@@ -283,6 +239,36 @@
 					<dd>라즈베리 카메라를 이용해 비디오를 촬영합니다.</dd>
 				</dl>
 			</div>
+
+			<div class="interim-result" ng-bind="interimResult"></div>
+			<div class="bottom-right">
+				<!-- 하단부 오른쪽  -->
+
+			</div>
+
+			<!--
+			<div class="bottom-left">
+				<!-- 하단부 왼쪽 핸드폰 페어링 -->
+				<!-- 안드로이드와 통신하여 Notification (전화,Facebook,카카오톡,문자, 메일)을 받습니다. -->
+				<div id="titleNoti">
+
+				<div id="titleCalendar" >
+				<span>Schedule</span><br>
+				</div>
+				<ul class="calendar fade" ng-show="focus == 'default'">
+					<li class="event" ng-repeat="event in calendar">
+						<div class="event-details">
+							<span class="day">{{event.start.format('dddd') |
+								uppercase}}</span> <span class="summary">{{event.SUMMARY}}</span>
+							<div class="details">{{event.start.format('MMMM Do YYYY, h:mm:ss a')}}</div>
+					</li>
+				</ul>
+
+
+						</div>
+
+			</div>
+
 		</div>
 	</div>
 

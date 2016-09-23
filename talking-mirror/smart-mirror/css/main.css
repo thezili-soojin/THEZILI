@@ -1,19 +1,41 @@
-@font-face {
+/*@font-face {
     font-family: "HelveticaNeue-UltraLight";
-    src: url("../fonts/HelveticaNeue-UltraLight.ttf"); /* EOT file for IE */
+    src: url("../fonts/HelveticaNeue-UltraLight.ttf"); 
 }
 
 @font-face {
     font-family: "myfont-ttf";
     src: url("../fonts/NanumBarunGothic.ttf");
+}*/
+
+@font-face {
+	font-family: 'HelveticaNeue';
+	font-weight:  normal;
+	font-style: normal;
+	src:url('font/HelveticaNeue.eot');
+	src:local(※), url('font/HelveticaNeue.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Helvetica';
+	font-weight:  normal;
+	font-style: normal;
+	src:url('font/Helvetica.eot');
+	src:local(※), url('font/Helvetica.woff') format('woff');
 }
 
 body {
-    background-color: #000;
+	padding:0;
+	margin: 0;
+	background-color: #000;
+    /*background-image: url('../image/download.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%	;
+    background-position: center;*/
     color: #fff;
-    font-family: "NanumGothic", "HelveticaNeue-UltraLight",'myfont-ttf','HelveticaNeue-UltraLight', 'Open Sans', sans-serif;
-    font-weight: 100;
+    font-family: 'Helvetica', 'HelveticaNeue', 'Malgun Gothic', sans-serif;
     position: relative;
+    letter-spacing: 1px;
 }
 
 h1,
@@ -24,19 +46,10 @@ h5 {
     font-weight: 100;
 }
 h1 {
-	/*font-family: 'myfont-ttf', sans-serif, Serif;*/
-	font-family: 'NanumGothic';
+	font-family: 'Helvetica', 'HelveticaNeue', 'Malgun Gothic', sans-serif;
 	font-size: 60px
 }
 
-dt {
-    font-weight: 600;
-    font-weight: bold;
-    font-size : 18px;
-}
-dd {
-	font-size : 12px;
-}
 /* Colors */
 .light-grey {
     color: #ccc;
@@ -73,32 +86,51 @@ dd {
 
 
 .listening, .interim-result {
-    font-family: 'Open Sans', sans-serif;
+    padding-top: 10px;
+	font-size: 20px;
 }
 
+.result2 {
+	position: absolute;
+    bottom: 30px;
+    width: 600px;
+    left: 50%;
+    margin-left: -300px;
+    text-align: center;
+    padding: 0;
+}
+
+.top {
+    display: inline-block;
+}
+
+
 .top-left {
-    /*background: rgba(255, 255, 255, .1);*/
     float: left;
 }
 
 .time {
-    font-family: 'NanumGothic';
-    font-size: 60px;
+    font-size: 43px;
     color : white;
     text-align: center;
+    letter-spacing: 2px;
 }
 
 
 .date {
-    font-size: 42px;
-    /* add 3/28 Mon. */
-    font-weight: bold;
-    color : white;
+	padding-top: 5px;
+	font-size: 22px;
+    color : rgba(255, 255, 255, .7);
     text-align: center;
+    text-transform: uppercase;
 }
 
 .top-right {
     float: right;
+    text-align : left;
+    padding: 30px;
+    background: rgba(255, 255, 255, .15);
+    border-radius: 1px;
 }
 
 .middle-center {
@@ -112,30 +144,77 @@ dd {
     justify-content: center;
 }
 
+
 .bottom-center {
-    font-family: 'Open Sans', sans-serif;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .bottom-right {
-    text-align : center;
     float : right;
+    text-align : left;
+    padding: 25px;
+    background: rgba(255, 255, 255, .15);
+    border-radius: 1px;
 }
 
 .bottom-left {
-    text-align : center;
+    text-align : left;
     float : left;
-    width : 350px;
-    margin-left : 5px;
+    padding: 25px;
+    background: rgba(255, 255, 255, .15);
+    border-radius: 1px;
 }
 
 .commands {
-    width: 450px;
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
+   position: absolute;
+   top: 50%;
+   left:50%;
+   margin-top: -400px;
+   margin-left: -170px;
+   padding: 25px;
+	/*background: rgba(255,255,255,.2);*/
+	z-index: 999;
+   
+}
+
+.commands h3 {
+	padding: 0;
+	margin: 0;
+	font-size: 18px;
+}
+
+.commands dt {
+	margin: 0;
+	list-style : none;
+	padding-top: 14px;
+	padding-left: 15px;
+	font-weight: bold;
+    font-size : 15px;
+}
+
+
+dl, dt, dd {
+	padding: 0;
+	margin: 0;
+}
+
+.commands dd {
+	margin: 0;
+	list-style : none;
+	padding: 3px 0 0 13px;
+	font-size : 13px;
+	color: rgba(255, 255, 255, .8);
+}
+.commands dt:before {
+	float: left;
+	width: 12px;
+	height: 10px;
+	content: '';
+	background: url('../image/icon_minus.png') 0 6px / 7px auto no-repeat;
 }
 
 #whoissmartmirror {
@@ -144,17 +223,10 @@ dd {
 }
 
 #titleCalendar {
-  margin-top: 50px;
-  font-size : 25px;
-  width: 350px;
-  height:60px;
-  text-align: center;
-  font-family: 'NanumGothic';
+  padding-bottom: 15px;
+  font-size : 15px;
+  line-height: 100%;
   color: white;
-  background: rgba(255, 255, 255, .1);
-/* 
-  border-top-left-radius : 10px;
-  border-top-right-radius : 10px;*/
 }
 
 #calendar-sidebar {
@@ -162,8 +234,6 @@ dd {
 	height : 168px;
 	float : left;
 	background: rgba(255, 255, 255, .1);
-	border-top-left-radius : 10px;
-	border-bottom-left-radius : 10px;
 }
 
 element.style {
@@ -172,20 +242,24 @@ element.style {
 }
 
 ul.calendar {
+    display: inline-block;
     list-style: none;
-    font-size: 22px;
-    margin-left: 10px;
+    font-size: 20px;
     margin-top : 0px;
     margin-bottom: 0px;
     padding:0;
 }
 
 .calendar .event{
-    /* add 3/28 Mon. */
-     margin-bottom: 3px; 
-    border-radius: 5px;
-    background: rgba(255, 255, 255, .1);
-    width: 350px;
+    padding: 10px 0; 
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    text-align: left;
+}
+
+.calendar .event:after {
+	display: block;
+	clear: both;
+	content: '';
 }
 
 .calendar span {
@@ -193,83 +267,100 @@ ul.calendar {
 }
 
 .calendar span.day {
+	float: left;
     font-weight: bold;
-    width: 100px;
+    width: 70px;
     vertical-align: top;
-    margin-left: 5px; 
+    margin-left: 0; 
+    font-size: 17px;
 }
 
 .calendar span.summary{
-    margin-left: 6px;
-    max-width: 250px;
+    float: left;
+    max-width: 260px;
+    font-size: 18px;
 }
 
 .calendar .event-details .details{
-    font-size: 12px;
-    padding-left: 90px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: lighter;
+	clear: both;
+    font-size: 13px;
+    padding: 5px 0 0 70px;
+    color: rgba(255, 255, 255, .5);
 }
 
 .weather {
-    margin-left: auto;
-    display: inline-block;
-    text-align: right;
-    width: 250px;
-    /* add 3/28 Mon. */
-    background-color: rgba(255, 255, 255, .1);
-    border-radius: 5px;
-    border: 1px;
+	display: inline-block;
+	text-align : center;
+    float : left;
+    padding: 25px;
+    background: rgba(255, 255, 255, .15);
+    border-radius: 1px;
 }
 
 #titleWeather {
-  font-size : 25px;
-  text-align : center;
-  height:40px;
-  font-family: 'NanumGothic';
-  color: white;
-  /*background: rgba(255, 255, 255, .1);
-  border-radius: 10px;*/
+	padding-bottom: 15px;
+    font-size: 15px;
+    line-height: 100%;
+    color: white;
+    font-family: 'arial';
+    text-align: left;
+}
+
+.temp_wrap {
+	padding: 20px 0;
+}
+
+.wi {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    
 }
 
 .weather-today .tempreture {
-    font-size: 48px;
-    /* add 3/28 Mon. */
+    display: inline-block;
+    padding-left: 10px;
+    line-height: 48px;
+    font-size: 38px;
     color : white;
     font-weight: bold;
+    vertical-align: middle;
 }
 
-.weather-week-descriptor {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
-    margin-left: auto;
-    margin-bottom: 5px;
-    text-align: right;
+.weather-today .degree {
+	display: inline-block;
+	font-size: 30px;
+	line-height: 48px;
+	font-weight: normal;
+	vertical-align: middle;
+}
 
+
+
+.weather-week-day {
+    text-align: left;
 }
 
 .weather-week {
+	padding: 6px 0 5px;
     font-size: 22px;
-    /* add 3/28 Mon. */
     color: white;
-    border-radius: 5px;
-    margin-top: 3px;
-    margin-left: 10px;
-    background : linear-gradient(to right, #7D7D7D, #7F7F7F);
+    margin-top: 1px;
+    border-bottom : 1px solid rgba(255, 255, 255, .15);
 }
 
 .weather-week .day {
     display: inline-block;
-    margin-right: 10px;
-    width: 50px;
-
-    /* add 3/28 Mon. */
-    color: white;
+    width: 65px;
+    text-align:left;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 1);
+    font-size: 17px;
+    text-transform: uppercase;
 }
 
 .weather-week .tempreture {
     display: inline-block;
-    width: 60px;
+    font-size: 21px;
 }
 
 .traffic {
@@ -325,12 +416,7 @@ ul.calendar {
 
 /** Noti */
 #titleNoti {
-  font-size : 25px;
-  /* add 3/28 Mon. */
-  border-top-left-radius : 10px;
-  border-top-right-radius : 10px;
-  width: 290px;
-  text-align: center;	
+  display: inline-block;
 }
 
 .noti {
@@ -343,17 +429,35 @@ ul.calendar {
 }
 /** News */
 .news{
-	width:600px; 
+	width:650px; 
 	margin:auto;
 }
-#news-div{
-	background: linear-gradient(to bottom right,#dcdcdc, #FFFFFF);
-	border-radius: 5px;
+
+.news-container {
+	background: rgba(255, 255, 255, .2);
+	border-radius: 1px;
+	padding: 25px;
 }
+
+.news-title {
+	padding-bottom: 15px;
+    text-align: left;
+}
+
 #news-div span.titletext{
-	color : #000;
-	display: list-item;
+	display: block;
+	padding: 10px 0;
+	color : #fff;
+	text-align: left;
 } 
+
+#news-div span.titletext:before {
+	float: left;
+	width: 13px;
+	height: 10px;
+	content: '';
+	background: url('../image/icon_minus.png') 0 6px / 7px auto no-repeat;
+}
 
 .contents{
   max-width: 100%;
@@ -400,7 +504,9 @@ ul.calendar {
 }
 
 .dimmed {
-    color: #aaa;
+    color: rgba(255, 255, 255, .9);
+    display: inline-block;
+    text-align: center;
 }
 
 .xxsmall,
@@ -428,29 +534,52 @@ ul.calendar {
 
 
 .icon {
-  position: relative;
+  font-size: 48px;
+  vertical-align: middle;
+  /*position: relative;
   top: -10px;
   display: inline-block;
-  font-size: 40px;
+  
   padding-right: 5px;
   font-weight: 100;
-  margin-right: 10px;
+  margin-right: 10px;*/
 }
 
 .icon-small {
   position: relative;
   display: inline-block;
   font-size: 20px;
-  padding-left: 0px;
+  padding-left: 0;
   padding-right: -10px;
-  font-weight: 100;
-  width: 20px;
-  color : white;
+  font-weight: normal;
+  width: 28px;
+  margin-top: -6px;
+  color : rgba(255, 255, 255, .55);
+}
+
+.icon-small:before {
+    width: 28px;
+    text-align: center;
+    display: inline-block;
 }
 
 .xkcd {
   -webkit-filter:invert(100%);
   max-width: 100%;
+}
+
+.sc-container {
+    margin: auto;
+    -webkit-filter: grayscale(70%);
+    filter: grayscale(70%);
+    font-family: bold;
+}
+
+.scWaveform {
+    background-color: #000000;
+    width: 500px;
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
 }
 
 @font-face {
@@ -547,4 +676,25 @@ i {
 
 #weather .currently {
     margin: 0 20px;
+}
+
+/* add */
+.greeting {
+	display: inline-block;
+	text-align:center;
+}
+
+.greeting h1 {
+	display: inline-block;
+	font-size: 52px;
+	letter-spacing: 8px;
+	padding: 0;
+	margin: 0;
+}
+
+.subwayInfo-container {
+    padding: 20px;
+    background: rgba(255,255,255,.15);
+    width: 600px;
+    margin: auto;
 }

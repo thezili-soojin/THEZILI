@@ -10,8 +10,9 @@
             TrafficService,
             SubwayService,
             YoutubeService,
+            SoundCloudService,
             $scope, $timeout, $interval, $sce) {
-    	
+
         var _this = this;
         var command = COMMANDS.ko;
         var functionService = FUNCTIONSERVICE;
@@ -25,7 +26,7 @@
         $scope.greetingHidden = "true";
         $scope.user = {};
         $scope.interimResult = DEFAULT_COMMAND_TEXT;
-        
+
         /** Smart Mirror IP */
         var os = require('os');
         var networkInterfaces = os.networkInterfaces();
@@ -36,14 +37,14 @@
         SC.initialize({
         	client_id : config.soundcloud.key
         });
-        
+
         $scope.musicplay = null;
         SC.stream('/tracks/1').then(function(player){
         	$scope.musicplay = player
         	//player.play();
         });
         */
-        
+
         // Update the time
         function updateTime(){
             $scope.date = new Date();
@@ -55,7 +56,7 @@
         }
 
         _this.init = function() {
-        	$scope.map = MapService.generateMap("Seoul,Korea");
+        	$scope.map = MapService.generateMap("Seoul, Korea");
             var tick = $interval(updateTime, 1000); // 1초 마다
             updateTime();
 
@@ -65,6 +66,10 @@
                 $scope.map = MapService.generateMap(geoposition.coords.latitude+','+geoposition.coords.longitude);
             });
             restCommand();
+
+            //Initialize SoundCloud
+            var playing = false, sound;
+            //SoundCloudService.init();
 
             /** 현재 장소를 가져오며, 날씨 정보를 가져온다. */
             var refreshMirrorData = function() {
@@ -126,7 +131,7 @@
             AnnyangService.addCommand(command.whois,function() {
             	functionService.whoIsSmartMirror($scope);
             });
-            
+
             // 사용가능한 명령을 보여준다.
             AnnyangService.addCommand(command.whatcanisay, function() {
                functionService.whatCanISay($scope);
@@ -175,7 +180,7 @@
                 $scope.map = MapService.zoomOut();
             });
 
-            // 지도의 줌 값을 정한다. 
+            // 지도의 줌 값을 정한다.
             AnnyangService.addCommand(command.zoomvalue, function(value) {
                 console.debug("Moooop!!!", value);
                 $scope.map = MapService.zoomTo(value);
@@ -190,7 +195,7 @@
 
 
             /** Youtube API */
-            // Youtube 동영상 재생 
+            // Youtube 동영상 재생
             AnnyangService.addCommand(command.playyoutube, function(term) {
               YoutubeService.getYoutube(term,'video').then(function(){
                 if(term){
@@ -222,7 +227,7 @@
             });
 
             /** Subway */
-            // 지하철 도착 정보 
+            // 지하철 도착 정보
             AnnyangService.addCommand(command.subway, function(station,linenumber,updown) {
               SubwayService.init(station).then(function(){
                 SubwayService.getArriveTime(linenumber,updown).then(function(data){
@@ -231,7 +236,7 @@
                     $scope.subwayinfo2 = data[2].ARRIVETIME + "에 " + data[2].SUBWAYNAME + "행 열차";
                     $scope.subwayinfo3 = data[3].ARRIVETIME + "에 " + data[3].SUBWAYNAME + "행 열차";
                     $scope.subwayinfo4 = data[4].ARRIVETIME + "에 " + data[4].SUBWAYNAME + "행 열차";
-             
+
                     if(responsiveVoice.voiceSupport()) {
                     	responsiveVoice.speak(data[1].ARRIVETIME + "에 " + data[1].SUBWAYNAME + "행 열차가 있습니다. 이어서,"+data[2].ARRIVETIME + "에 " + data[2].SUBWAYNAME + "행 열차가 있습니다.","Korean Female");
                     }
@@ -242,7 +247,7 @@
                 });
               });
             });
-            
+
             /** Google News */
             // 구글 뉴스를 보여준다.
             AnnyangService.addCommand(command.news, function() {
@@ -258,9 +263,9 @@
             // 동영상 촬영
             AnnyangService.addCommand(command.video, function() {
             	functionService.video(VIDEO_INDEX);
-        		VIDEO_INDEX++;
+        		  VIDEO_INDEX++;
             });
-            
+
             /** Relay Switch control Light */
             /* npm install onoff */
 
@@ -268,39 +273,54 @@
             AnnyangService.addCommand(command.lighton,function(state,action) {
             	functionService.lightOn();
             });
-            
+
             // 릴레이 스위치 OFF -> Light off
             AnnyangService.addCommand(command.lightoff,function() {
             	functionService.lightOff();
             });
-            
+
             /** Sound Cloud */
-            /*
             // 음악 재생
             AnnyangService.addCommand(command.musicplay,function() {
-            	console.log("음악 시작");
-            	//$scope.musicplay.play(); // 음악 시작
-		functionService.musicplay();
+            	console.log("음악 재생");
             	
+            	$scope.musicplay.play(); // 음악 재생
+		        functionService.musicplay();
+
+              SoundCloudService.searchSoundCloud(query).then(function(response){
+                console.log("## Call SoundCloudService.searchSoundCloud");
+
+                if (response[0].artwork_url){
+                    $scope.scThumb = response[0].artwork_url.replace("-large.", "-t500x500.");
+                } else {
+                    $scope.scThumb = 'http://i.imgur.com/8Jqd33w.jpg?1';
+                }
+                $scope.scWaveform = response[0].waveform_url;
+                $scope.scTrack = response[0].title;
+                $scope.focus = "sc";
+                SoundCloudService.play();
+              });
             });
-            
+
             // 음악정지
             AnnyangService.addCommand(command.musicstop,function(state,action) {
             	console.log("음악 정지");
-            	//$scope.musicplay.pause(); // 음악 정지
+            	$scope.musicplay.pause(); // 음악 정지
+                console.log("## Call SoundCloudService.pause");
+                SoundCloudService.pause();
+                $scope.focus = "default";
             });
-            */
-        
+
             /** 안드로이드에서 보낸 SST 명령어를 미러와 동작하게 하는 부분*/
             var sender = require('remote').getGlobal('sender');
      	    sender.on('android',function(android){
      	    	$scope.interimResult = android.command; // 미러의 음성인식된 문구에 보여짐
 	    		console.log("Android Command :: "+android.command);
 	    		var androidCommand = android.command+"";
-	    		
+
     			if(androidCommand === command.sleep) { functionService.goSleep($scope);}
     			else if(androidCommand === command.whois) { functionService.whoIsSmartMirror($scope); }
-    			else if(androidCommand === command.home) { functionService.defaultHome($scope); }  
+    			else if(androidCommand === command.home) { functionService.defaultHome($scope); }
     			else if(androidCommand === command.wake) { functionService.wake($scope); }
     			else if(androidCommand === command.whatcanisay) { functionService.whatCanISay($scope); }
     			else if(androidCommand === command.map) { functionService.map($scope,GeolocationService,MapService); }
@@ -309,7 +329,7 @@
     			else if(androidCommand === command.video) { functionService.video(); }
     			else if(androidCommand === command.lighton) { functionService.lightOn();}
     			else if(androidCommand === command.lightoff) { functionService.lightOff();}
-    			
+
     			/* Map Service ***의 위치 보여줘 */
     			var locationExist = androidCommand.indexOf("위치");
 	    		if(locationExist != -1) {
@@ -317,7 +337,7 @@
 	    			console.log(locationValue[0]);
 	    			functionService.location(locationValue[0],$scope,GeolocationService,MapService);
 	    		}
-	    		
+
 	    		/* Youtube *** 동영상 보여줘 */
 	    		var youtubeExist = androidCommand.indexOf("동영상");
 	    		if(youtubeExist != -1) {
@@ -329,24 +349,24 @@
 		    			functionService.playYoutube(youtubeValue[0],$scope,$sce,YoutubeService);
 	    			}
      	    	}
-	    		
+
 	    		/* 지하철 **역 *호선 *행성 */
 	    		var subwayExist = androidCommand.indexOf("역");
 	    		if(subwayExist != -1) {
 	    			// OO역 OO호선 상(하)행선
 	    			var temp1 = androidCommand.split("역");
 	    			var temp2 = temp1[1].split("호선");
-	    			
+
 	    			var subwayStation = temp1[0];
 	    			var subwayLineNumber = temp2[0].trim();
 	    			var subwayUpDown = temp2[1].trim();
 	    			console.log(subwayStation+"역"+subwayLineNumber+"호선"+subwayUpDown);
 	    			functionService.subway(subwayStation,subwayLineNumber,subwayUpDown,$scope,SubwayService);
 	    		}
-	    		
-	    		
+
+
     	    });
-	    
+
 
             var resetCommandTimeout;
             //Track when the Annyang is listening to us
@@ -359,7 +379,7 @@
                 $scope.interimResult = result[0];
                 resetCommandTimeout = $timeout(restCommand, 5000);
             });
-            
+
             $scope.interimResult = DEFAULT_COMMAND_TEXT; // 미러의 음성인식된 문구에 보여짐
         };
 
