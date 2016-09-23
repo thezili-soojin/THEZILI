@@ -56,6 +56,8 @@
         }
 
         _this.init = function() {
+			var player = new Audio('');
+			
         	$scope.map = MapService.generateMap("Seoul, Korea");
             var tick = $interval(updateTime, 1000); // 1초 마다
             updateTime();
@@ -284,6 +286,26 @@
             AnnyangService.addCommand(command.musicplay,function() {
             	console.log("음악 재생");
             	
+            	if(window.HTMLAudioElement) {
+					console.log("window.HTMLAudioElement");
+					
+					// random play music
+					var random = Math.floor(Math.random() * 3) + 1;
+					console.log("Music Play track is ## random = " + random)
+					var url = './music/track_' + random + '.mp3';
+					if(player.paused || url != player.src){
+						if(player.canPlayType('audio/mp3')) {
+							console.log("canPlayType");
+							
+							player.src = url;
+						}
+					}
+					console.log("player.play");
+					player.play();
+					//$scope.focus = "musicplay";
+				}
+            	
+            	/*
             	$scope.musicplay.play(); // 음악 재생
 		        functionService.musicplay();
 
@@ -300,15 +322,24 @@
                 $scope.focus = "sc";
                 SoundCloudService.play();
               });
+              */
+              
             });
 
-            // 음악정지
-            AnnyangService.addCommand(command.musicstop,function(state,action) {
+            // 음악정지 state,action
+            AnnyangService.addCommand(command.musicstop,function() {
             	console.log("음악 정지");
+            
+				console.log("player.pause");
+				player.pause();
+				//$scope.focus = "default";
+            	
+            	/*
             	$scope.musicplay.pause(); // 음악 정지
                 console.log("## Call SoundCloudService.pause");
                 SoundCloudService.pause();
                 $scope.focus = "default";
+                */
             });
 
             /** 안드로이드에서 보낸 SST 명령어를 미러와 동작하게 하는 부분*/
