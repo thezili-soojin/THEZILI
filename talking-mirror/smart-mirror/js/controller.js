@@ -285,12 +285,14 @@
             // 음악 재생
             AnnyangService.addCommand(command.musicplay,function() {
             	console.log("음악 재생");
+            	functionService.musicplay();
+            	
             	
             	if(window.HTMLAudioElement) {
 					console.log("window.HTMLAudioElement");
 					
 					// random play music
-					var random = Math.floor(Math.random() * 3) + 1;
+					var random = Math.floor(Math.random() * 7) + 1;
 					console.log("Music Play track is ## random = " + random)
 					var url = './music/track_' + random + '.mp3';
 					if(player.paused || url != player.src){
@@ -304,6 +306,7 @@
 					player.play();
 					//$scope.focus = "musicplay";
 				}
+            	
             	
             	/*
             	$scope.musicplay.play(); // 음악 재생
@@ -329,6 +332,7 @@
             // 음악정지 state,action
             AnnyangService.addCommand(command.musicstop,function() {
             	console.log("음악 정지");
+				functionService.musicpause();
             
 				console.log("player.pause");
 				player.pause();
