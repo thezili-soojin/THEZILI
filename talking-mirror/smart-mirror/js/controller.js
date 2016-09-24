@@ -56,7 +56,7 @@
         }
 
         _this.init = function() {
-			var player = new Audio('');
+		var player = new Audio('');
 			
         	$scope.map = MapService.generateMap("Seoul, Korea");
             var tick = $interval(updateTime, 1000); // 1초 마다
