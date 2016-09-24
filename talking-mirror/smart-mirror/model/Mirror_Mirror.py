@@ -15,10 +15,10 @@ from scipy import ndimage
 from six.moves import cPickle as pickle
 
 # Data Path define
-TRAIN_DATA_PATH = '/Users/JunChangWook/Tensorflow/Data/Mirror_Mirror_Data/Data'
-REAL_DATA_PATH = './data/real.jpg'
-PREDICT_DATA_PATH = '/Users/JunChangWook/Tensorflow/Data/Mirror_Mirror_Data/Predict_Data/predict.jpg'
-CASCADE_DATA_PATH = './'
+TRAIN_DATA_PATH = ''
+REAL_DATA_PATH = './model/data/real.jpg'
+PREDICT_DATA_PATH = ''
+CASCADE_DATA_PATH = './model/'
 
 # Classification Number define
 NUM_CLASSES = 3
@@ -284,7 +284,7 @@ if __name__ == "__main__":
 
     with graph.as_default():
         # Saver Init
-        ckpt_dir = './ckpt_dir'
+        ckpt_dir = './model/ckpt_dir'
         if not os.path.exists(ckpt_dir):
             os.makedirs(ckpt_dir)
 

@@ -22,6 +22,9 @@ var FUNCTIONSERVICE = {
 	},
 	wake : function($scope) {
 		console.debug("Wake up...");
+		var predict = require('./model/app').predicts(function(message) {
+			console.debug("predict result", message)
+			});
 		if(responsiveVoice.voiceSupport()) {
             responsiveVoice.speak("안녕하세요. 미러에요!","Korean Female");
           }
@@ -132,7 +135,7 @@ var FUNCTIONSERVICE = {
 		var cmd_photo = 'raspistill -o '+photo_path;
 		exec_photo(cmd_photo, function(error, stdout, stderr){
 			console.log('Photo Saved : ',photo_path);
-			require('./js/mailer').sendEmail(photo_path);
+			require('./js/upload').upload();
 		});
 		
 		// 4초 후 음성 합성 출력
