@@ -25,8 +25,21 @@ var FUNCTIONSERVICE = {
 	wake : function($scope) {
 		console.debug("Wake up...");
 		var predict = require('./model/app').predicts(function(message) {
-			console.debug("predict result", message)
-			});
+			console.debug("predict result : ", message);
+				
+			message = 1;
+			console.debug("message : ", message);
+			if(message == 1) {
+				$('#news-div').load('https://news.google.co.kr/news?pz=1&zx=muklwsp2gkt0 .section-toptop .esc-lead-article-title .titletext',function(){
+					console.log('news loaded.');
+					$scope.focus = "newsMain";
+				});
+			} else {
+				
+			}
+			
+		});
+		
 		if(responsiveVoice.voiceSupport()) {
             responsiveVoice.speak("안녕하세요. 거울아에요!","Korean Female");
           }
