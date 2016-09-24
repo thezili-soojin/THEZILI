@@ -224,7 +224,24 @@
 			</div>
 
 			<div class="bottom-center">
-				<div class="bottom-right"><!-- 하단부 오른쪽  --></div>
+				<div class="bottom-right">
+					<div id="titleNoti" class="calendar_wrap">
+		
+						<div id="titleCalendar" >
+							<span>TODAY'S NEWS</span><br>
+						</div>
+						
+						<ul class="calendar" ng-show="focus == 'default'">
+							<li class="event" ng-repeat="event in calendar">
+									
+								<div class="news-title">TODAY'S NEWS</div>
+								<div id="news-div" ></div>
+								
+							</li>
+						</ul>
+					</div>
+				</div>
+			
 		
 				<div class="bottom-left">
 					<!-- 하단부 왼쪽 핸드폰 페어링 -->
@@ -246,7 +263,7 @@
 						</ul>
 					</div>
 				</div>
-				
+			</div>
 				<!--<div class="result2" ng-bind="interimResult"></div>-->
 		    </div>
 		    
@@ -259,12 +276,12 @@
 					<dd>사용 가능한 명령을 보여줍니다.</dd>
 					<dt>홈으로/메인으로</dt>
 					<dd>홈 스크린으로 돌아갑니다.</dd>
-					<dt>안녕 핑크</dt>
-					<dd>핑크를 깨웁니다.</dd>
-					<dt>잘자 핑크</dt>
-					<dd>핑크를 재웁니다.</dd>
+					<dt>안녕 거울아</dt>
+					<dd>거울아를 깨웁니다.</dd>
+					<dt>잘자 거울아</dt>
+					<dd>거울아를 재웁니다.</dd>
 					<dt>너는 누구니</dt>
-					<dd>핑크는 누구일까요?</dd>
+					<dd>거울아는 누구일까요?</dd>
 					<dt>음악 재생해줘</dt>
 					<dd>음악을 랜덤으로 재생해 줍니다.</dd>
 					<dt>*** 동영상 보여줘</dt>
