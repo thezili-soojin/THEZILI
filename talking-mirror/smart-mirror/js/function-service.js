@@ -1,4 +1,5 @@
 var FUNCTIONSERVICE = {
+	
 	defaultHome : function($scope) {
 		console.debug("Ok, going to default view...");
         if(responsiveVoice.voiceSupport()) {
@@ -9,9 +10,10 @@ var FUNCTIONSERVICE = {
 	whoIsSmartMirror : function($scope) {
 		console.log("Who is Smart Mirror");
 		if(responsiveVoice.voiceSupport()) {
-	          responsiveVoice.speak("저는 음성 인식이 가능한 스마트 미러입니다.","Korean Female");
+	          responsiveVoice.speak("저는 음성 인식이 가능한 거울아거울아입니다.","Korean Female");
         }
 		$scope.focus = "whoissmartmirror";
+		
 	},
 	goSleep : function($scope){
 		console.debug("Ok, going to sleep...");
@@ -23,7 +25,7 @@ var FUNCTIONSERVICE = {
 	wake : function($scope) {
 		console.debug("Wake up...");
 		if(responsiveVoice.voiceSupport()) {
-            responsiveVoice.speak("안녕하세요. 미러에요!","Korean Female");
+            responsiveVoice.speak("안녕하세요. 거울아에요!","Korean Female");
           }
     	$scope.focus = "default";
 	},
@@ -170,20 +172,20 @@ var FUNCTIONSERVICE = {
 		}, 4000);
 		
 	},
+	
 	musicplay :function() {
 		console.debug("play music");
 
 		if(responsiveVoice.voiceSupport()) {
-            		responsiveVoice.speak("음악을 재생합니다.", "Korean Female");
+            responsiveVoice.speak("음악을 재생합니다.", "Korean Female");
 		}	
-
-		var exec_musicplay = require('child_process').exec;
-		var cmd_path = "/home/pi/Mirror/talking-mirror/smartmirror-web-application/smart-mirror/Apink_Remember.mp3";
-		var cmd_musicplay = 'omxplayer -o local '+cmd_path;
-		exec_musicplay(cmd_musicplay, function(errror, stdout, stderr) {
-			console.log('Start musicplay');
-		});
-
+	},
+	
+	musicpause :function(){
+		console.log("pause music");
+		if(responsiveVoice.voiceSupport()) {
+            responsiveVoice.speak("음악을 정지합니다.", "Korean Female");
+		}
 	},
 
 	lightOn : function() {
