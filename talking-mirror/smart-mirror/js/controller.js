@@ -364,6 +364,14 @@
     			else if(androidCommand === command.video) { functionService.video(); }
     			else if(androidCommand === command.lighton) { functionService.lightOn();}
     			else if(androidCommand === command.lightoff) { functionService.lightOff();}
+    			else if(androidCommand === command.zoomin) { 
+					console.debug("Zoooooooom!!!");
+					$scope.map = MapService.zoomIn();
+				}
+				else if(androidCommand === command.zoomout) { 
+					console.debug("Moooooooooz!!!");
+					$scope.map = MapService.zoomOut();
+				}
 
     			/* Map Service ***의 위치 보여줘 */
     			var locationExist = androidCommand.indexOf("위치");
@@ -372,7 +380,13 @@
 	    			console.log(locationValue[0]);
 	    			functionService.location(locationValue[0],$scope,GeolocationService,MapService);
 	    		}
-
+	    		
+	    		/*var zoomoutExist = androidCommand.indexOf("축소");
+	    		if(zoomoutExist != -1) {
+	    			console.debug("Moooooooooz!!!");
+					$scope.map = MapService.zoomOut();
+	    		}*/
+	    	
 	    		/* Youtube *** 동영상 보여줘 */
 	    		var youtubeExist = androidCommand.indexOf("동영상");
 	    		if(youtubeExist != -1) {

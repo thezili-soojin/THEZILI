@@ -46,7 +46,7 @@ h5 {
     font-weight: 100;
 }
 h1 {
-	font-family: 'Helvetica', 'HelveticaNeue', 'Malgun Gothic', sans-serif;
+	font-family: 'HelveticaHelvetica', 'HelveticaNeue', 'Malgun Gothic', sans-serif;
 	font-size: 60px
 }
 
@@ -173,7 +173,7 @@ h1 {
    position: absolute;
    top: 50%;
    left:50%;
-   margin-top: -400px;
+   margin-top: -10px;
    margin-left: -170px;
    padding: 25px;
 	/*background: rgba(255,255,255,.2);*/
