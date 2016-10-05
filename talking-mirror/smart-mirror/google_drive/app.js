@@ -9,7 +9,7 @@ var options = {
 };
 
 function upload(file_path, callback) {
-	PythonShell.run('./google_drive/google-drive-upload.py file_path', options, function(err, results) {
+	PythonShell.run('./google_drive/google-drive-upload.py', options, function(err, results) {
 		if (err) throw err;
 
 		console.log('results : %j', results);

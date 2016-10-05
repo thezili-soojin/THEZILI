@@ -144,18 +144,18 @@ def get_service(client_id, client_secret):
 
 def main():
   """Run the script."""
-  parser = argparse.ArgumentParser(description = "Upload a file to Google Drive.")
-  parser.add_argument("file",  nargs='+', help = "File to upload")
-  parser.add_argument("-d", "--directory", help = "Target directory")
-  options = parser.parse_args()
-
-  logging.basicConfig()
-  logger = logging.getLogger()
-  logger.setLevel('ERROR')
-
-  # Create the settings directory if it doesn't exist.
-  if (not os.path.exists(SETTINGS)):
-    os.makedirs(SETTINGS)
+  # parser = argparse.ArgumentParser(description = "Upload a file to Google Drive.")
+  # parser.add_argument("file",  nargs='+', help = "File to upload")
+  # parser.add_argument("-d", "--directory", help = "Target directory")
+  # options = parser.parse_args()
+  #
+  # logging.basicConfig()
+  # logger = logging.getLogger()
+  # logger.setLevel('ERROR')
+  #
+  # # Create the settings directory if it doesn't exist.
+  # if (not os.path.exists(SETTINGS)):
+  #   os.makedirs(SETTINGS)
 
   # Load the configuration (client authentication).
   config = ConfigParser.ConfigParser()
@@ -171,29 +171,31 @@ def main():
 
   # Determine the identifier for the destination folder.
   directory = "/"
-  if options.directory:
-    directory = options.directory
+  # if options.directory:
+  #   directory = options.directory
   identifier = get_identifier(drive_service, directory)
 
-  for f in options.file:
-    if os.path.exists(f):
-      print "Uploading '%s'..." % f
+  print('identifier : ' , identifier)
+  # for f in 'app.js':
+  f = '../smartmirror_making1.PNG'
+  if os.path.exists(f):
+    print "Uploading '%s'..." % f
 
-      # Retry uploads three times before giving up and reporting an error.
-      retries = 0
-      while (True):
-        try:
-          upload(drive_service, f, identifier)
-          break;
-        except:
-          retries = retries + 1
-          if (retries >= 3):
-            sys.exit("Failed to upload '%s'." % f)
-          else:
-            print "Retrying..."
+    # Retry uploads three times before giving up and reporting an error.
+    retries = 0
+    while (True):
+      try:
+        upload(drive_service, f, identifier)
+        break;
+      except:
+        retries = retries + 1
+        if (retries >= 3):
+          sys.exit("Failed to upload '%s'." % f)
+        else:
+          print "Retrying..."
 
-    else:
-      sys.exit("Local file '%s' does not exist." % f);
+  else:
+    sys.exit("Local file '%s' does not exist." % f);
 
 if __name__ == '__main__':
   main()
