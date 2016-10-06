@@ -158,10 +158,18 @@ def main():
   #   os.makedirs(SETTINGS)
 
   # Load the configuration (client authentication).
+  
+  if len(sys.argv) == 1:
+	  print sys.argv[0]
+  elif len(sys.argv) == 2:
+	  print sys.argv[1]
+
+  f = sys.argv[1]
+  
   config = ConfigParser.ConfigParser()
   config.read(CONFIGURATION)
-  client_id = '732061499630-f1b1249lgp184n6ciuojmi7lhl44910a.apps.googleusercontent.com'
-  client_secret = '1hGkqZjEu_a-ThtsIVaH2b0C'
+  client_id = '608630183663-qfod9bmc0a85pf4tckacercqgo02t4ic.apps.googleusercontent.com'
+  client_secret = '-pRGgMLNaY2jenTfQnxk2FcD'
 
   drive_service = None
   try:
@@ -172,12 +180,12 @@ def main():
   # Determine the identifier for the destination folder.
   directory = "/"
   # if options.directory:
-  #   directory = options.directory
+  #   directory = options.directory 
   identifier = get_identifier(drive_service, directory)
 
   print('identifier : ' , identifier)
   # for f in 'app.js':
-  f = '../smartmirror_making1.PNG'
+  
   if os.path.exists(f):
     print "Uploading '%s'..." % f
 

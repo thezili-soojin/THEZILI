@@ -88,7 +88,7 @@ var FUNCTIONSERVICE = {
 		console.log("Play Youtube");
 		
 		if(responsiveVoice.voiceSupport()) {
-        	responsiveVoice.speak("유튜브를 동영상을 재생합니다.","Korean Female");
+        	responsiveVoice.speak("유튜브를 재생합니다.","Korean Female");
         }
 		YoutubeService.getYoutube(term,'video').then(function(){
 			if(term){
@@ -103,7 +103,7 @@ var FUNCTIONSERVICE = {
 		console.debug("Stop Youtube");
 		
 		if(responsiveVoice.voiceSupport()) {
-        	responsiveVoice.speak("유튜브를 동영상을 정지합니다.","Korean Female");
+        	responsiveVoice.speak("유튜브를 정지합니다.","Korean Female");
         }
 		
 		var iframe = document.getElementsByTagName("iframe")[0].contentWindow;
@@ -150,7 +150,7 @@ var FUNCTIONSERVICE = {
 		var cmd_photo = 'raspistill -o '+photo_path;
 		exec_photo(cmd_photo, function(error, stdout, stderr){
 			console.log('Photo Saved : ',photo_path);
-			require('./google_drive/upload').upload();
+			require('./google_drive/app').upload(photo_path);
 		});
 		
 		// 4초 후 음성 합성 출력
@@ -172,12 +172,12 @@ var FUNCTIONSERVICE = {
 		/* 비디오 저장될 위치 설정*/
 		var video_path = __dirname+"/public/video/"+"video"+VIDEO_INDEX+'.h264';
 		/* 라즈베리 카메라 비디오 명령*/
-		var cmd_video = 'raspivid -o '+video_path+' -t 4000';
+		var cmd_video = 'raspivid -o '+video_path+' -t 7000';
 		
 		/* 라즈베리 카메라 비디오 촬영 및 이메일 전송*/
 		exec_video(cmd_video, function(errror, stdout, stderr) {
 			console.log('Video Saved : ',video_path);
-			require('./js/mailer').sendEmail(video_path);
+			require('./google_drive/app').upload(video_path);
 		});
 		
 		// 4초 후 음성 합성 출력
@@ -185,7 +185,7 @@ var FUNCTIONSERVICE = {
 			if(responsiveVoice.voiceSupport()) {
 				responsiveVoice.speak("비디오 촬영이 끝났습니다.","Korean Female");
 			}
-		}, 4000);
+		}, 7000);
 		
 	},
 	
