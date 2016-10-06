@@ -150,7 +150,7 @@ var FUNCTIONSERVICE = {
 		var cmd_photo = 'raspistill -o '+photo_path;
 		exec_photo(cmd_photo, function(error, stdout, stderr){
 			console.log('Photo Saved : ',photo_path);
-			require('./js/upload').upload();
+			require('./google_drive/upload').upload();
 		});
 		
 		// 4초 후 음성 합성 출력
