@@ -149,7 +149,7 @@ var FUNCTIONSERVICE = {
 		var cmd_photo = 'raspistill -o '+photo_path;
 		exec_photo(cmd_photo, function(error, stdout, stderr){
 			console.log('Photo Saved : ',photo_path);
-			require('./js/upload').upload();
+			require('./google_drive/app').upload(photo_path);
 		});
 
 		// 4초 후 음성 합성 출력
@@ -158,34 +158,6 @@ var FUNCTIONSERVICE = {
 				responsiveVoice.speak("사진 촬영이 끝났습니다.","Korean Female");
 			}
 		}, 4000);
-	},
-	video : function(VIDEO_INDEX) {
-		console.debug("Take a Video ...");
-
-		if(responsiveVoice.voiceSupport()) {
-            responsiveVoice.speak("비디오 촬영을 시작합니다.","Korean Female");
-        }
-
-		/* 비디오 프로세스*/
-		var exec_video = require('child_process').exec;
-		/* 비디오 저장될 위치 설정*/
-		var video_path = __dirname+"/public/video/"+"video"+VIDEO_INDEX+'.h264';
-		/* 라즈베리 카메라 비디오 명령*/
-		var cmd_video = 'raspivid -o '+video_path+' -t 4000';
-
-		/* 라즈베리 카메라 비디오 촬영 및 이메일 전송*/
-		exec_video(cmd_video, function(errror, stdout, stderr) {
-			console.log('Video Saved : ',video_path);
-			require('./js/mailer').sendEmail(video_path);
-		});
-
-		// 4초 후 음성 합성 출력
-		setTimeout(function() {
-			if(responsiveVoice.voiceSupport()) {
-				responsiveVoice.speak("비디오 촬영이 끝났습니다.","Korean Female");
-			}
-		}, 4000);
-
 	},
 
 	musicplay :function() {
