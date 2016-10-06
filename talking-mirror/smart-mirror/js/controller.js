@@ -334,8 +334,57 @@
                   }
                 }
             }
+            
+            var musicPrevPlay = function() {
+				if($scope.isPlaying) {
 
+					if(music_cur == 1) {
+						music_cur = 14;	
+					} else {
+						music_cur = music_cur - 2;
+					}
+					console.log("musicprev, music_cur = " + music_cur);
+                
+					music_url = './music/' + track_name[music_cur];
 
+					if(window.HTMLAudioElement) {
+						if(player.paused || music_url != player.src) {
+							if(player.canPlayType('audio/mp3')) {
+							console.log("canPlayType");
+							player.src = music_url;
+							}
+						}
+						console.log("player.play");
+						player.play();
+
+						musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
+						music_cur++;
+					}
+				}
+			}
+            
+            var musicNextPlay = function() {
+				if($scope.isPlaying) {
+
+					console.log("musicnext, music_cur = " + music_cur);
+					music_url = './music/' + track_name[music_cur];
+
+					if(window.HTMLAudioElement) {
+						if(player.paused || music_url != player.src) {
+							if(player.canPlayType('audio/mp3')) {
+								console.log("canPlayType");
+								player.src = music_url;
+							}
+						}
+						console.log("player.play");
+						player.play();
+
+						musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
+						music_cur++;
+					}
+				}
+			}
+			
             /** Sound Cloud */
             // 음악 재생
 
@@ -344,8 +393,7 @@
             	functionService.musicplay();
 
             	$scope.isPlaying = true;
-              //$scope.musicType = "default";
-              musicSeqPlay();
+				musicSeqPlay();
 
             	/* soundcloud source
             	$scope.musicplay.play(); // 음악 재생
@@ -390,63 +438,13 @@
             // 이전 재생
             AnnyangService.addCommand(command.musicprev,function() {
             	console.log("이전 재생");
-      				
-              //$scope.musicType = "prev";
-
-              if($scope.isPlaying) {
-				  //functionService.musicprev(); 
-
-				if(music_cur == 1) {
-					music_cur = 14;	
-				} else {
-					music_cur = music_cur - 2;
-				}
-				console.log("musicprev, music_cur = " + music_cur);
-                
-                music_url = './music/' + track_name[music_cur];
-
-                if(window.HTMLAudioElement) {
-                    if(player.paused || music_url != player.src) {
-                        if(player.canPlayType('audio/mp3')) {
-                          console.log("canPlayType");
-                          player.src = music_url;
-                        }
-                    }
-                    console.log("player.play");
-                    player.play();
-
-                    musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
-                    music_cur++;
-                }
-              }
+      			musicPrevPlay();
             });
 
             // 다음 재생
             AnnyangService.addCommand(command.musicnext,function() {
             	console.log("다음 재생");
-      				
-              //$scope.musicType = "next";
-
-      				if($scope.isPlaying) {
-						//functionService.musicnext();
-
-					console.log("musicnext, music_cur = " + music_cur);
-					music_url = './music/' + track_name[music_cur];
-
-                if(window.HTMLAudioElement) {
-                    if(player.paused || music_url != player.src) {
-                        if(player.canPlayType('audio/mp3')) {
-                          console.log("canPlayType");
-                          player.src = music_url;
-                        }
-                    }
-                    console.log("player.play");
-                    player.play();
-
-                    musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
-                    music_cur++;
-                }
-              }
+				musicNextPlay();
             });
 
             /** 안드로이드에서 보낸 SST 명령어를 미러와 동작하게 하는 부분*/
@@ -467,6 +465,20 @@
     			else if(androidCommand === command.video) { functionService.video(); }
     			else if(androidCommand === command.lighton) { functionService.lightOn();}
     			else if(androidCommand === command.lightoff) { functionService.lightOff();}
+    			else if(androidCommand === command.musicplay) { 
+					console.log("음악 재생");
+					functionService.musicplay();
+					$scope.isPlaying = true;
+					musicSeqPlay();
+				}
+    			else if(androidCommand === command.musicstop) {
+					console.log("음악 정지");
+					functionService.musicpause();
+      				$scope.isPlaying = false;	
+      				player.pause();
+				}
+    			else if(androidCommand === command.musicprev) { musicPrevPlay();}
+    			else if(androidCommand === command.musicnext) { musicNextPlay();}
     			else if(androidCommand === command.zoomin) {
 					console.debug("Zoooooooom!!!");
 					$scope.map = MapService.zoomIn();
