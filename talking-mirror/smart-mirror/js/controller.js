@@ -19,7 +19,9 @@
         var DEFAULT_COMMAND_TEXT = command.default;
         var PHOTO_INDEX=0;
         var VIDEO_INDEX=0;
+        $scope.isPlaying = false;
         $scope.listening = false;
+        $scope.musicType = "default";
         $scope.complement = command.hi;
         $scope.debug = false;
         $scope.focus = "default";
@@ -31,6 +33,11 @@
         var os = require('os');
         var networkInterfaces = os.networkInterfaces();
         $scope.ipAddress = networkInterfaces.wlan0[0].address;
+
+        // music player info
+        var player = new Audio('');
+
+
 
         /** Sound Cloud Service */
         /*
@@ -56,11 +63,11 @@
         }
 
         _this.init = function() {
-		var player = new Audio('');
-			
-        	$scope.map = MapService.generateMap("Seoul, Korea");
-            var tick = $interval(updateTime, 1000); // 1초 마다
-            updateTime();
+		        var player = new Audio('');
+
+        	   $scope.map = MapService.generateMap("Seoul, Korea");
+             var tick = $interval(updateTime, 1000); // 1초 마다
+             updateTime();
 
             /** GPS 정보를 가져온다 */
             GeolocationService.getLocation({enableHighAccuracy: true}).then(function(geoposition){
@@ -281,34 +288,61 @@
             	functionService.lightOff();
             });
 
+            var track_name = ["track_1.mp3", "track_2.mp3", "track_3.mp3", "track_4.mp3", "track_5.mp3", "track_6.mp3", "track_7.mp3"
+                            , "track_8.mp3", "track_9.mp3", "track_10.mp3", "track_11.mp3", "track_12.mp3", "track_13.mp3", "track_14.mp3"];
+            var track_time = [249000, 217000, 205000, 214000, 188000, 165000, 221000, 283000, 369000, 214000, 244000, 239000, 211000, 219000];
+            var musicCommandTimeout;
+            var music_url;
+            var music_cur = 0;
+            var MAX_MUSIC_COUNT = 14;
+
+            var musicSeqPlay = function() {
+
+              if($scope.isPlaying) {
+                  if(music_cur > MAX_MUSIC_COUNT) {
+                    music_cur = 0;
+                    console.log("Func musicSeqPlay, music_cur max! initialize = " + music_cur);
+                  }
+
+                  console.log("Func musicSeqPlay, music_cur = " + music_cur);
+                  music_url = './music/' + track_name[music_cur];
+
+                  if(window.HTMLAudioElement) {
+                      if(player.paused || music_url != player.src) {
+                          if(player.canPlayType('audio/mp3')) {
+                            console.log("canPlayType");
+                            player.src = music_url;
+                          }
+                      }
+                      console.log("player.play");
+                      player.play();
+
+                      musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
+                      music_cur++;
+                      /*
+                      if($scope.musicType == "default" || $scope.musicType == "next") {
+                        music_cur++;
+                      } else if($scope.musicType == "prev") {
+                        music_cur--;
+                      }*/
+
+                  }
+                }
+            }
+
+
             /** Sound Cloud */
             // 음악 재생
+
             AnnyangService.addCommand(command.musicplay,function() {
             	console.log("음악 재생");
             	functionService.musicplay();
-            	
-            	
-            	if(window.HTMLAudioElement) {
-					console.log("window.HTMLAudioElement");
-					
-					// random play music
-					var random = Math.floor(Math.random() * 7) + 1;
-					console.log("Music Play track is ## random = " + random)
-					var url = './music/track_' + random + '.mp3';
-					if(player.paused || url != player.src){
-						if(player.canPlayType('audio/mp3')) {
-							console.log("canPlayType");
-							
-							player.src = url;
-						}
-					}
-					console.log("player.play");
-					player.play();
-					//$scope.focus = "musicplay";
-				}
-            	
-            	
-            	/*
+
+            	$scope.isPlaying = true;
+              $scope.musicType = "default";
+              musicSeqPlay();
+
+            	/* soundcloud source
             	$scope.musicplay.play(); // 음악 재생
 		        functionService.musicplay();
 
@@ -326,18 +360,20 @@
                 SoundCloudService.play();
               });
               */
-              
+
             });
 
             // 음악정지 state,action
             AnnyangService.addCommand(command.musicstop,function() {
             	console.log("음악 정지");
-				functionService.musicpause();
-            
-				console.log("player.pause");
-				player.pause();
-				//$scope.focus = "default";
-            	
+      				functionService.musicpause();
+
+      				$scope.isPlaying = false;
+
+      				console.log("player.pause");
+      				player.pause();
+      				//$scope.focus = "default";
+
             	/*
             	$scope.musicplay.pause(); // 음악 정지
                 console.log("## Call SoundCloudService.pause");
@@ -346,12 +382,67 @@
                 */
             });
 
+            // 이전 재생
+            AnnyangService.addCommand(command.musicprev,function() {
+            	console.log("이전 재생");
+      				functionService.musicprev();
+              //$scope.musicType = "prev";
+
+              if($scope.isPlaying) {
+                console.log("musicprev, music_cur = " + music_cur);
+
+                music_url = music_url - 2;
+                music_url = './music/' + track_name[music_cur];
+
+                if(window.HTMLAudioElement) {
+                    if(player.paused || music_url != player.src) {
+                        if(player.canPlayType('audio/mp3')) {
+                          console.log("canPlayType");
+                          player.src = music_url;
+                        }
+                    }
+                    console.log("player.play");
+                    player.play();
+
+                    music_cur++;
+                    musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
+                }
+              }
+            });
+
+            // 다음 재생
+            AnnyangService.addCommand(command.musicnext,function() {
+            	console.log("다음 재생");
+      				functionService.musicnext();
+              //$scope.musicType = "next";
+
+      				if($scope.isPlaying) {
+                console.log("musicnext, music_cur = " + music_cur);
+
+                music_url = './music/' + track_name[music_cur];
+
+                if(window.HTMLAudioElement) {
+                    if(player.paused || music_url != player.src) {
+                        if(player.canPlayType('audio/mp3')) {
+                          console.log("canPlayType");
+                          player.src = music_url;
+                        }
+                    }
+                    console.log("player.play");
+                    player.play();
+
+                    music_cur++;
+                    musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
+                }
+              }
+            });
+
             /** 안드로이드에서 보낸 SST 명령어를 미러와 동작하게 하는 부분*/
             var sender = require('remote').getGlobal('sender');
-     	    sender.on('android',function(android){
-     	    	$scope.interimResult = android.command; // 미러의 음성인식된 문구에 보여짐
-	    		console.log("Android Command :: "+android.command);
-	    		var androidCommand = android.command+"";
+     	        sender.on('android',function(android){
+     	    	     $scope.interimResult = android.command; // 미러의 음성인식된 문구에 보여짐
+	    		       console.log("Android Command :: "+android.command);
+	    		       var androidCommand = android.command+"";
 
     			if(androidCommand === command.sleep) { functionService.goSleep($scope);}
     			else if(androidCommand === command.whois) { functionService.whoIsSmartMirror($scope); }
@@ -364,11 +455,11 @@
     			else if(androidCommand === command.video) { functionService.video(); }
     			else if(androidCommand === command.lighton) { functionService.lightOn();}
     			else if(androidCommand === command.lightoff) { functionService.lightOff();}
-    			else if(androidCommand === command.zoomin) { 
+    			else if(androidCommand === command.zoomin) {
 					console.debug("Zoooooooom!!!");
 					$scope.map = MapService.zoomIn();
 				}
-				else if(androidCommand === command.zoomout) { 
+				else if(androidCommand === command.zoomout) {
 					console.debug("Moooooooooz!!!");
 					$scope.map = MapService.zoomOut();
 				}
@@ -380,13 +471,13 @@
 	    			console.log(locationValue[0]);
 	    			functionService.location(locationValue[0],$scope,GeolocationService,MapService);
 	    		}
-	    		
+
 	    		/*var zoomoutExist = androidCommand.indexOf("축소");
 	    		if(zoomoutExist != -1) {
 	    			console.debug("Moooooooooz!!!");
 					$scope.map = MapService.zoomOut();
 	    		}*/
-	    	
+
 	    		/* Youtube *** 동영상 보여줘 */
 	    		var youtubeExist = androidCommand.indexOf("동영상");
 	    		if(youtubeExist != -1) {
