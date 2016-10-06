@@ -137,7 +137,7 @@
 			<div class="time">{{date | date : 'h:mm:ss a'}}</div>
 			<div class="date grey">{{date | date : 'EEE, MMM dd '}}</div>
 		</div>
-	
+
 		<!-- Weather Layout-->
 		<div class="top">
 			<div class="weather">
@@ -148,7 +148,7 @@
 							<span>TODAY'S WEATHER</span>
 						</div>
 						<div class="temp_wrap">
-							<span class="icon dimmed wi {{currentForcast.wi}}"></span> 
+							<span class="icon dimmed wi {{currentForcast.wi}}"></span>
 							<span class="tempreture">{{currentForcast.temperature}}</span> <span class="degree">&deg;</span>
 						</div>
 					</div>
@@ -173,7 +173,7 @@
 		</div>
 		<div class="container">
 			<div class="middle-center">
-				
+
 				<div class="greeting hidden" ng-show="focus == 'default'">
 					<h1>{{greeting}}</h1>
 					<div class="interim-result" ng-bind="interimResult"></div>
@@ -182,7 +182,7 @@
 						<i></i>
 					</div>
 				</div>
-				<!-- 
+				<!--
 				<div class="contents-box sc-container animate-grow" ng-show="focus == 'default'">
 				  <audio id="player" controls="" autoplay="" preload autobuffer style="display: none"></audio>
 				  <div><canvas id="visualizer" width="300" height="150"></canvas></div>
@@ -190,29 +190,29 @@
 				  <img class="scWaveform" ng-src="{{scWaveform}}"/>
 				  <h2 class="sc" ng-bind="scTrack"></h2>
 				</div>
-				
+
 				<div class="listening" ng-show="listening">Ready: {{focus}}</div> -->
-				
+
 				<div class="contents-box animate-grow" ng-show="focus == 'whoissmartmirror'">
 					<img id="whoissmartmirror" src="image/whoissmartmirror.PNG" />
 				</div>
-				
+
 				<div class="contents-box map animate-grow" ng-show="focus == 'map'">
 					<img class="contents map animate-grow" ng-src="{{map}}" />
 				</div>
-				
+
 				<div class="youtube-container animate-grow"
 					ng-show="focus == 'youtube'">
 					<iframe id="youtube_player" class="yt_player_iframe" width="100%"
 						height="90%" ng-src="{{currentYoutubeUrl}}" allowfullscreen="true"
 						allowscriptaccess="always" frameborder="0"></iframe>
 				</div>
-				
+
 				<div class="news-container news animate-grow" ng-show="focus == 'news'">
 					<div class="news-title">TODAY'S NEWS</div>
 					<div id="news-div" ></div>
 				</div>
-	
+
 				<div class="subwayInfo-container animate-grow"
 					ng-show="focus == 'subway'">
 					<p class="subwayInfo">{{subwayinfo1}}</p>
@@ -220,38 +220,38 @@
 					<p class="subwayInfo">{{subwayinfo3}}</p>
 					<p class="subwayInfo">{{subwayinfo4}}</p>
 				</div>
-				
+
 			</div>
 
 			<div class="bottom-center">
 				<div class="bottom-right">
 					<div id="titleNoti" class="calendar_wrap">
-		
+
 						<div id="titleCalendar" >
 							<span>TODAY'S NEWS</span><br>
 						</div>
-						
+
 						<ul class="calendar" ng-show="focus == 'default'">
 							<li class="event" ng-repeat="event in calendar">
-									
+
 								<div class="news-title">TODAY'S NEWS</div>
 								<div id="news-div" ></div>
-								
+
 							</li>
 						</ul>
 					</div>
 				</div>
-			
-		
+
+
 				<div class="bottom-left">
 					<!-- 하단부 왼쪽 핸드폰 페어링 -->
 					<!-- 안드로이드와 통신하여 Notification (전화,Facebook,카카오톡,문자, 메일)을 받습니다. -->
 					<div id="titleNoti" class="calendar_wrap">
-		
+
 						<div id="titleCalendar" >
 							<span>SCHEDULE</span><br>
 						</div>
-						
+
 						<ul class="calendar" ng-show="focus == 'default'">
 							<li class="event" ng-repeat="event in calendar">
 								<div class="event-details">
@@ -266,9 +266,9 @@
 			</div>
 				<!--<div class="result2" ng-bind="interimResult"></div>-->
 		    </div>
-		    
+
 			<!-- Command list : commands-->
-			<div class="commands animate-grow" ng-show="focus == 'commands'" > 
+			<div class="commands animate-grow" ng-show="focus == 'commands'" >
 				<h3>사용 가능한 명령</h3>
 				<dl>
 					<!-- <dt> IP : {{ipAddress}}</dt> -->
@@ -284,6 +284,10 @@
 					<dd>거울아는 누구일까요?</dd>
 					<dt>음악 재생해줘</dt>
 					<dd>음악을 랜덤으로 재생해 줍니다.</dd>
+					<dt>다음 재생해줘</dt>
+					<dd>음악 재생중 다음 재생을 해 줍니다.</dd>
+					<dt>이전 재생해줘</dt>
+					<dd>음악 재생중 이전 재생을 해 줍니다.</dd>
 					<dt>*** 동영상 보여줘</dt>
 					<dd>관련 제목 Youtube로 동영상을 보여줍니다.</dd>
 					<dt>뉴스 보여줘</dt>
