@@ -21,17 +21,17 @@ PREDICT_DATA_PATH = ''
 CASCADE_DATA_PATH = './model/'
 
 # Classification Number define
-NUM_CLASSES = 2 # Classes 숫자 적어 주기
+NUM_CLASSES = 2 # Classes
 # Image define
-IMAGE_SIZE = 96 # 48 Image Size 적어 주기
-IMAGE_CHANNELS = 1  # 3 Color Depth 적어 주기 
+IMAGE_SIZE = 96 # 48 Image Size
+IMAGE_CHANNELS = 1  # 3 Color Depth 
 PIXEL_DEPTH = 255.0
 # Train define
-BATCH_SIZE = 320    #160 한번에 epoch 할때 사이즈
+BATCH_SIZE = 320    #160 epoch
 PATCH_SIZE = 3
 DEPTH = 16
 NUM_HIDDEN = 64
-NUM_STEPS = 60000   #30000
+NUM_STEPS = 18500   #30000
 
 TRAIN_DATA_SIZE = 3500
 # Variable define
