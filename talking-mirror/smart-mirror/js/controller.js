@@ -318,7 +318,12 @@
                       player.play();
 
                       musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
-                      music_cur++;
+
+                      if(music_cur == 14) {
+						music_cur = 0;	
+					  } else {
+						music_cur++;
+					  }
                       /*
                       if($scope.musicType == "default" || $scope.musicType == "next") {
                         music_cur++;
@@ -339,7 +344,7 @@
             	functionService.musicplay();
 
             	$scope.isPlaying = true;
-              $scope.musicType = "default";
+              //$scope.musicType = "default";
               musicSeqPlay();
 
             	/* soundcloud source
@@ -385,13 +390,19 @@
             // 이전 재생
             AnnyangService.addCommand(command.musicprev,function() {
             	console.log("이전 재생");
-      				functionService.musicprev();
+      				
               //$scope.musicType = "prev";
 
               if($scope.isPlaying) {
-                console.log("musicprev, music_cur = " + music_cur);
+				  //functionService.musicprev(); 
 
-                music_url = music_url - 2;
+				if(music_cur == 1) {
+					music_cur = 14;	
+				} else {
+					music_cur = music_cur - 2;
+				}
+				console.log("musicprev, music_cur = " + music_cur);
+                
                 music_url = './music/' + track_name[music_cur];
 
                 if(window.HTMLAudioElement) {
@@ -404,8 +415,8 @@
                     console.log("player.play");
                     player.play();
 
-                    music_cur++;
                     musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
+                    music_cur++;
                 }
               }
             });
@@ -413,13 +424,14 @@
             // 다음 재생
             AnnyangService.addCommand(command.musicnext,function() {
             	console.log("다음 재생");
-      				functionService.musicnext();
+      				
               //$scope.musicType = "next";
 
       				if($scope.isPlaying) {
-                console.log("musicnext, music_cur = " + music_cur);
+						//functionService.musicnext();
 
-                music_url = './music/' + track_name[music_cur];
+					console.log("musicnext, music_cur = " + music_cur);
+					music_url = './music/' + track_name[music_cur];
 
                 if(window.HTMLAudioElement) {
                     if(player.paused || music_url != player.src) {
@@ -431,8 +443,8 @@
                     console.log("player.play");
                     player.play();
 
-                    music_cur++;
                     musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
+                    music_cur++;
                 }
               }
             });
