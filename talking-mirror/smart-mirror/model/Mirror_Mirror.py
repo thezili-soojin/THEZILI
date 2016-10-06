@@ -21,20 +21,34 @@ PREDICT_DATA_PATH = ''
 CASCADE_DATA_PATH = './model/'
 
 # Classification Number define
-NUM_CLASSES = 3
+NUM_CLASSES = 2 # Classes 숫자 적어 주기
 # Image define
-IMAGE_SIZE = 48
-IMAGE_CHANNELS = 1
+IMAGE_SIZE = 96 # 48 Image Size 적어 주기
+IMAGE_CHANNELS = 1  # 3 Color Depth 적어 주기 
 PIXEL_DEPTH = 255.0
 # Train define
-BATCH_SIZE = 160
+BATCH_SIZE = 320    #160 한번에 epoch 할때 사이즈
 PATCH_SIZE = 3
 DEPTH = 16
 NUM_HIDDEN = 64
-NUM_STEPS = 30000
+NUM_STEPS = 60000   #30000
 
+TRAIN_DATA_SIZE = 3500
 # Variable define
+
 np.random.seed(133)
+CASC_PATH_DEFAULT = CASCADE_DATA_PATH + 'haarcascade_frontalface_default.xml'
+CASC_PATH_ALT = CASCADE_DATA_PATH + 'haarcascade_frontalface_alt.xml'
+CASC_PATH_ALT2 = CASCADE_DATA_PATH + 'haarcascade_frontalface_alt2.xml'
+CASC_PATH_ALT_TREE = CASCADE_DATA_PATH + 'haarcascade_frontalface_alt_tree.xml'
+
+cascade_classifier_default = cv2.CascadeClassifier(CASC_PATH_DEFAULT)
+cascade_classifier_alt = cv2.CascadeClassifier(CASC_PATH_DEFAULT)
+cascade_classifier_alt2 = cv2.CascadeClassifier(CASC_PATH_DEFAULT)
+cascade_classifier_alt_tree = cv2.CascadeClassifier(CASC_PATH_DEFAULT)
+
+# Create a memory stream so photos doesn't need to be saved in a file
+#stream = io.BytesIO()
 
 # make pickle
 def load_letter(folder, min_num_images):
@@ -132,13 +146,13 @@ def merge_datasets(pickle_files):
                 np.random.shuffle(letter_set)
                 #Set Valid Data
                 train_letter = letter_set[:, :, :]
-                print('train_letter shape : %s' % str(train_letter.shape))
+                print('train_letter shape : %s start_t : %s end_t : %s  ' % (str(train_letter.shape), str(start_t), str(end_t)))
                 train_datasets[start_t:end_t, :, :] = train_letter
                 train_labels[start_t:end_t] = label
-                print('train_dataset.shape : %s' % str(train_datasets.shape))
+                print('train_dataset.shape : %s start_t : %s end_t : %s ' % ( str(train_datasets.shape) , str(start_t), str(end_t)))
                 print('train_labels.shape : %s' % str(train_labels.shape))
 
-                start_t += end_t
+                start_t += data_size
         except Exception as e:
             print('Unable to process data form', pickle_file, ':', e)
             raise
@@ -189,20 +203,55 @@ def show_usage():
     print('\t Mirror_Mirror.py train \t Trains and saves model with saved dataset')
     print('\t Mirror_Mirror.py poc \t\t Trains and  Launch the proof of concept')
 
-def format_image(image):
+def facecrop(image):
     if len(image.shape) > 2 and image.shape[2] == 3:
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     else:
         image = cv2.imdecode(image, cv2.CV_LOAD_IMAGE_GRAYSCALE)
 
-    faces = cascade_classifier.detectMultiScale(
+    faces_default = cascade_classifier_default.detectMultiScale(
         image,
-        scaleFactor = 1.3,
-        minNeighbors = 5
+        scaleFactor = 1.1,
+        minNeighbors = 10,
+        minSize=(5, 5), 
+        flags=cv2.CASCADE_SCALE_IMAGE
     )        
 
-    if not len(faces) > 0:
+    faces_alt = cascade_classifier_alt.detectMultiScale(
+        image,
+        scaleFactor = 1.1,
+        minNeighbors = 10,
+        minSize=(5, 5), 
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )  
+
+    faces_alt2 = cascade_classifier_alt2.detectMultiScale(
+        image,
+        scaleFactor = 1.1,
+        minNeighbors = 10,
+        minSize=(5, 5), 
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )  
+
+    faces_alt_tree = cascade_classifier_alt_tree.detectMultiScale(
+        image,
+        scaleFactor = 1.1,
+        minNeighbors = 10,
+        minSize=(5, 5), 
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )          
+
+    if len(faces_default) > 0:
+        faces = faces_default
+    elif len(faces_alt) > 0:
+        faces = faces_alt
+    elif len(faces_alt2) > 0:
+        faces = faces_alt2
+    elif len(faces_alt_tree) > 0:
+        faces = faces_alt_tree
+    else:
         return None
+
     max_area_face = faces[0]
     for face in faces:
         if face[2] * face[3] > max_area_face[2] * max_area_face[3]:
@@ -275,7 +324,7 @@ if __name__ == "__main__":
 
     mTrain = False
     if mTrain:
-        train_datasets = maybe_pickle(TRAIN_DATA_PATH, 2000)
+        train_datasets = maybe_pickle(TRAIN_DATA_PATH, TRAIN_DATA_SIZE)
         train_dataset, train_labels = merge_datasets(train_datasets)
         train_dataset, train_labels = reformat(train_dataset, train_labels)
         train_dataset, train_labels = addchannelreformat(train_dataset, train_labels)
@@ -338,6 +387,7 @@ if __name__ == "__main__":
                 _, l, predictions = session.run([optimizer, loss, train_prediction], feed_dict=feed_dict)
                 if (step % 100 == 0):
                     print('Minibatch loss at step ', step, ':', l)
+                if (step % 1000 == 0):
                     global_step.assign(step).eval()
                     saver.save(session, ckpt_dir + '/model.ckpt', global_step=global_step)
         else:
@@ -347,9 +397,6 @@ if __name__ == "__main__":
             time.sleep(1)
             
             if(os.path.exists(REAL_DATA_PATH)):
-                CASC_PATH = CASCADE_DATA_PATH + 'haarcascade_frontalface_default.xml'
-                cascade_classifier = cv2.CascadeClassifier(CASC_PATH)
-
                 print('Full Filename : ' + REAL_DATA_PATH)
                 img = cv2.imread(REAL_DATA_PATH)
                 img = facecrop(img)
