@@ -338,6 +338,18 @@
                 }
             }
             
+            var musicStop = function() {
+				    $scope.isPlaying = false;
+
+      				console.log("player.pause");
+      				player.pause();
+      				/** Timer Cancel */
+                    if(typeof musicCommandTimeout != "undefined") {
+                          $timeout.cancel(musicCommandTimeout);
+                          musicCommandTimeout = null; 
+                    } 
+			}
+            
             var musicPrevPlay = function() {
 				if($scope.isPlaying) {
 
@@ -429,14 +441,7 @@
             AnnyangService.addCommand(command.musicstop,function() {
             	console.log("음악 정지");
       				functionService.musicpause();
-
-      				$scope.isPlaying = false;
-
-      				console.log("player.pause");
-      				player.pause();
-                      /** Timer Cancel */
-		                    musicCommandTimeout = null;  
-      				//$scope.focus = "default";
+					musicStop();
 
             	/*
             	$scope.musicplay.pause(); // 음악 정지
@@ -485,8 +490,7 @@
     			else if(androidCommand === command.musicstop) {
 					console.log("음악 정지");
 					functionService.musicpause();
-      				$scope.isPlaying = false;	
-      				player.pause();
+      				 musicStop();
 				}
     			else if(androidCommand === command.musicprev) { musicPrevPlay();}
     			else if(androidCommand === command.musicnext) { musicNextPlay();}

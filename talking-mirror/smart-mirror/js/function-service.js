@@ -187,9 +187,6 @@ var FUNCTIONSERVICE = {
 		if(responsiveVoice.voiceSupport()) {
             responsiveVoice.speak("음악을 정지합니다.", "Korean Female");
 		}
-
-		console.log("player.pause");
-		player.pause();
 	},
 
 	lightOn : function() {
