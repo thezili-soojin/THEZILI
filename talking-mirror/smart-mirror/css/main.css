@@ -1,6 +1,6 @@
 /*@font-face {
     font-family: "HelveticaNeue-UltraLight";
-    src: url("../fonts/HelveticaNeue-UltraLight.ttf"); 
+    src: url("../fonts/HelveticaNeue-UltraLight.ttf");
 }
 
 @font-face {
@@ -177,12 +177,12 @@ h1 {
    position: absolute;
    top: 50%;
    left:50%;
-   margin-top: -400px;
+   margin-top: -10px;
    margin-left: -170px;
    padding: 25px;
 	/*background: rgba(255,255,255,.2);*/
 	z-index: 999;
-   
+
 }
 
 .commands h3 {
@@ -255,7 +255,7 @@ ul.calendar {
 }
 
 .calendar .event{
-    padding: 10px 0; 
+    padding: 10px 0;
     border-bottom: 1px solid rgba(255, 255, 255, .1);
     text-align: left;
 }
@@ -275,7 +275,7 @@ ul.calendar {
     font-weight: bold;
     width: 70px;
     vertical-align: top;
-    margin-left: 0; 
+    margin-left: 0;
     font-size: 17px;
 }
 
@@ -324,7 +324,7 @@ ul.calendar {
 .wi {
     display: inline-block !important;
     vertical-align: middle !important;
-    
+
 }
 
 .weather-today .tempreture {
@@ -408,7 +408,7 @@ ul.calendar {
   border-radius: 10px;
   background : linear-gradient(to right, #7D7D7D, #7F7F7F);
   font-weight : bold;
-  
+
 }
 
 
@@ -441,13 +441,13 @@ ul.calendar {
 }
 /** News */
 .news{
-	width:600px; 
+	width:600px;
 	margin:auto;
 }
 
 .newsMain{
-	width:500px; 
-	height:270px; 
+	width:500px;
+	height:270px;
 	margin:auto;
 }
 
@@ -472,7 +472,7 @@ ul.calendar {
 	padding: 10px 0;
 	color : #fff;
 	text-align: left;
-} 
+}
 
 #main-news-div span.titletext{
 	display: block;
@@ -569,7 +569,7 @@ ul.calendar {
   /*position: relative;
   top: -10px;
   display: inline-block;
-  
+
   padding-right: 5px;
   font-weight: 100;
   margin-right: 10px;*/
