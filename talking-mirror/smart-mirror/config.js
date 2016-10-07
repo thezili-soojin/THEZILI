@@ -36,5 +36,8 @@ var config = {
     },
     soundcloud: {
 		key:"096c66435395236212c96162f9092915"
-    }   
+    },
+    whoyou : {
+		name : ""
+	}
 }

@@ -37,7 +37,7 @@ var COMMANDS  = { "en" : {
     "whois" : "너는 누구니",
     "home" : '홈으로',
     "sleep" : '잘자 거울아',
-    "wake" : '안녕 거울아',
+    "wake" : '거울아 거울아',
     "debug" : '디버그',
     "map" : '지금 어디 야',
     "locaiton" : '*location위치 보여 줘',

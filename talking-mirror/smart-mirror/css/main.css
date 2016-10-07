@@ -46,8 +46,12 @@ h5 {
     font-weight: 100;
 }
 h1 {
-	font-family: 'HelveticaHelvetica', 'HelveticaNeue', 'Malgun Gothic', sans-serif;
+	font-family: 'Helvetica', 'HelveticaNeue', 'Malgun Gothic', sans-serif;
 	font-size: 60px
+}
+
+.sujin {
+	display: none !important;
 }
 
 /* Colors */
@@ -173,7 +177,7 @@ h1 {
    position: absolute;
    top: 50%;
    left:50%;
-   margin-top: -10px;
+   margin-top: -400px;
    margin-left: -170px;
    padding: 25px;
 	/*background: rgba(255,255,255,.2);*/
@@ -288,6 +292,13 @@ ul.calendar {
     color: rgba(255, 255, 255, .5);
 }
 
+.event-details .mainNewsdetails{
+	clear: both;
+    font-size: 13px;
+    padding: 5px 0 0 70px;
+    color: rgba(255, 255, 255, .5);
+}
+
 .weather {
 	display: inline-block;
 	text-align : center;
@@ -333,8 +344,6 @@ ul.calendar {
 	font-weight: normal;
 	vertical-align: middle;
 }
-
-
 
 .weather-week-day {
     text-align: left;
@@ -418,6 +427,9 @@ ul.calendar {
 #titleNoti {
   display: inline-block;
 }
+#titleNotiNews {
+  display: inline-block;
+}
 
 .noti {
 	text-align: left;
@@ -429,7 +441,13 @@ ul.calendar {
 }
 /** News */
 .news{
-	width:650px; 
+	width:600px; 
+	margin:auto;
+}
+
+.newsMain{
+	width:500px; 
+	height:270px; 
 	margin:auto;
 }
 
@@ -444,12 +462,24 @@ ul.calendar {
     text-align: left;
 }
 
+.mainnews-title {
+	padding-bottom: 10px;
+    text-align: left;
+}
+
 #news-div span.titletext{
 	display: block;
 	padding: 10px 0;
 	color : #fff;
 	text-align: left;
 } 
+
+#main-news-div span.titletext{
+	display: block;
+	padding: 7px 0;
+	color : #fff;
+	text-align: left;
+}
 
 #news-div span.titletext:before {
 	float: left;
