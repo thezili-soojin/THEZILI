@@ -434,6 +434,8 @@
 
       				console.log("player.pause");
       				player.pause();
+                      /** Timer Cancel */
+		                    musicCommandTimeout = null;  
       				//$scope.focus = "default";
 
             	/*
