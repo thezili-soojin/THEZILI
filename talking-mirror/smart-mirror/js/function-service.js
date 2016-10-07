@@ -25,7 +25,7 @@ var FUNCTIONSERVICE = {
 		require('./model/app').predicts(function(message) {
 			
 
-
+			
 			console.debug("predict result", message)
 			if(message == "[1]"){
 				config.whoyou.name = "은숙님";
@@ -34,11 +34,21 @@ var FUNCTIONSERVICE = {
 				$("#titleNoti").removeClass('sujin')
 				$("#titleNotiNews").addClass('sujin')
 			
-			} else {
+			} else if(message == "[0]"){
 				config.whoyou.name = "";
 				console.debug("Face Detection value is == 0 ==!!")
 				
 				$("#titleNoti").addClass('sujin')
+				$("#titleNotiNews").removeClass('sujin')
+				
+				$('#main-news-div').load('https://news.google.co.kr/news?pz=1&zx=muklwsp2gkt0 .section-toptop .esc-lead-article-title .titletext',function(){
+					$scope.focus = "newsMain";
+				});
+			} else {
+				config.whoyou.name = "";
+				console.debug("Face Detection value is == 2 ==!!")
+				
+				$("#titleNoti").removeClass('sujin')
 				$("#titleNotiNews").removeClass('sujin')
 				
 				$('#main-news-div').load('https://news.google.co.kr/news?pz=1&zx=muklwsp2gkt0 .section-toptop .esc-lead-article-title .titletext',function(){
