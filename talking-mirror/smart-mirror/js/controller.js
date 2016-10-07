@@ -316,7 +316,10 @@
                       }
                       console.log("player.play");
                       player.play();
-
+                      /** Timer Cancel */
+                      if(typeof musicCommandTimeout != "undefined") {
+                          $timeout.cancel(musicCommandTimeout);
+                      }
                       musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
 
                       if(music_cur == 14) {
@@ -356,7 +359,10 @@
 						}
 						console.log("player.play");
 						player.play();
-
+			                        /** Timer Cancel */
+			                        if(typeof musicCommandTimeout != "undefined") {
+			                            $timeout.cancel(musicCommandTimeout);
+			                        }
 						musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
 						music_cur++;
 					}
@@ -378,7 +384,10 @@
 						}
 						console.log("player.play");
 						player.play();
-
+			                        /** Timer Cancel */
+			                        if(typeof musicCommandTimeout != "undefined") {
+			                            $timeout.cancel(musicCommandTimeout);
+			                        }
 						musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
 						music_cur++;
 					}
