@@ -136,6 +136,52 @@
             	functionService.defaultHome($scope);
             }
 
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_2,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_3,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_4,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_5,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_6,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_7,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_8,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_9,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+
             // 미러는 누구니
             AnnyangService.addCommand(command.whois,function() {
             	functionService.whoIsSmartMirror($scope);
@@ -149,12 +195,16 @@
             // 홈화면으로
             AnnyangService.addCommand(command.home, defaultView);
 
-            // 미러의 화면을 끈다.
+			// 미러의 화면을 ON
+            AnnyangService.addCommand(command.hi, function() {
+            	functionService.hi($scope);
+            });
+            // 미러의 화면을 OFF.
             AnnyangService.addCommand(command.sleep, function() {
             	functionService.goSleep($scope);
             });
 
-            // 미러의 화면을 켠다.
+            // Wake Up Mirror && Face Detection.
             AnnyangService.addCommand(command.wake, function() {
             	functionService.wake($scope);
             });
@@ -330,10 +380,10 @@
                       musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
 
                       if(music_cur == MAX_MUSIC_COUNT) {
-						music_cur = 0;
-					  } else {
-						music_cur++;
-					  }
+          						        music_cur = 0;
+          					  } else {
+          						        music_cur++;
+          					  }
                       /*
                       if($scope.musicType == "default" || $scope.musicType == "next") {
                         music_cur++;
@@ -355,16 +405,15 @@
                           $timeout.cancel(musicCommandTimeout);
                           musicCommandTimeout = null;
                     }
-			}
+			        }
 
             var musicPrevPlay = function() {
-				if($scope.isPlaying) {
-
-					if(music_cur == 1) {
-						music_cur = MAX_MUSIC_COUNT;
-					} else {
-						music_cur = music_cur - 2;
-					}
+				    if($scope.isPlaying) {
+					         if(music_cur == 1) {
+						               music_cur = MAX_MUSIC_COUNT;
+					         } else {
+						               music_cur = music_cur - 2;
+					         }
 					console.log("musicprev, music_cur = " + music_cur);
 
 					music_url = './music/' + track_name[music_cur];
@@ -478,6 +527,16 @@
 	    		       var androidCommand = android.command+"";
 
     			if(androidCommand === command.sleep) { functionService.goSleep($scope);}
+          else if(androidCommand === command.hi) { functionService.hi($scope); }
+          else if(androidCommand === command.mirror) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_2) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_3) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_4) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_5) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_6) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_7) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_8) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_9) { functionService.mirror($scope); }
     			else if(androidCommand === command.whois) { functionService.whoIsSmartMirror($scope); }
     			else if(androidCommand === command.home) { functionService.defaultHome($scope); }
     			else if(androidCommand === command.wake) { functionService.wake($scope); }
