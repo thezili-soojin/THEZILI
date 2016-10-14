@@ -69,7 +69,7 @@ var FUNCTIONSERVICE = {
 			}
 			});
 		if(responsiveVoice.voiceSupport()) {
-            responsiveVoice.speak("안녕하세요. 거울아거울아 입니다.     얼굴인식 중이니 잠시만 기다려 주세요","Korean Female");
+            responsiveVoice.speak("거울아거울아 입니다.     얼굴인식 중이니 잠시만 기다려 주세요","Korean Female");
           }
 
     	$scope.focus = "default";
@@ -155,7 +155,7 @@ var FUNCTIONSERVICE = {
 
 		var iframe = document.getElementsByTagName("iframe")[0].contentWindow;
         iframe.postMessage('{"event":"command","func":"' + 'stopVideo' +   '","args":""}', '*');
-        $scope.focus = "default";
+        $scope.focus = "commands";
 	},
 	subway : function(station,linenumber,updown,$scope,SubwayService) {
 		console.debug("subway");

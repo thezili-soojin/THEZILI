@@ -282,7 +282,7 @@
             AnnyangService.addCommand(command.stopyoutube, function() {
               var iframe = document.getElementsByTagName("iframe")[0].contentWindow;
               iframe.postMessage('{"event":"command","func":"' + 'stopVideo' +   '","args":""}', '*');
-              $scope.focus = "default";
+              $scope.focus = "commands";
             });
 
             /** Subway */
@@ -319,7 +319,7 @@
             	PHOTO_INDEX++;
             });
 
-            // 동영상 촬영
+            // video 촬영
             AnnyangService.addCommand(command.video, function() {
             	functionService.video(VIDEO_INDEX);
         		  VIDEO_INDEX++;

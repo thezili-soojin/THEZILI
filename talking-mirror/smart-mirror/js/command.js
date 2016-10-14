@@ -65,7 +65,7 @@ var COMMANDS  = { "en" : {
     "info" : "다음은 사용 가능한 질문입니다",
     "news" : "뉴스 보여 줘",
     "photo" : "사진 촬영",
-    "video" : "동영상 촬영",
+    "video" : "비디오 촬영",
     "lighton" : "불 켜",
     "lightoff" : "불 꺼"
   }
