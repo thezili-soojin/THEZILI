@@ -373,7 +373,7 @@
                       musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
 
                       if(music_cur == 14) {
-						music_cur = 0;	
+						music_cur = 0;
 					  } else {
 						music_cur++;
 					  }
@@ -387,7 +387,7 @@
                   }
                 }
             }
-            
+
             var musicStop = function() {
 				    $scope.isPlaying = false;
 
@@ -396,20 +396,20 @@
       				/** Timer Cancel */
                     if(typeof musicCommandTimeout != "undefined") {
                           $timeout.cancel(musicCommandTimeout);
-                          musicCommandTimeout = null; 
-                    } 
+                          musicCommandTimeout = null;
+                    }
 			}
-            
+
             var musicPrevPlay = function() {
 				if($scope.isPlaying) {
 
 					if(music_cur == 1) {
-						music_cur = 14;	
+						music_cur = 14;
 					} else {
 						music_cur = music_cur - 2;
 					}
 					console.log("musicprev, music_cur = " + music_cur);
-                
+
 					music_url = './music/' + track_name[music_cur];
 
 					if(window.HTMLAudioElement) {
@@ -430,7 +430,7 @@
 					}
 				}
 			}
-            
+
             var musicNextPlay = function() {
 				if($scope.isPlaying) {
 
@@ -455,7 +455,7 @@
 					}
 				}
 			}
-			
+
             /** Sound Cloud */
             // 음악 재생
 
@@ -521,6 +521,16 @@
 	    		       var androidCommand = android.command+"";
 
     			if(androidCommand === command.sleep) { functionService.goSleep($scope);}
+          else if(androidCommand === command.hi) { functionService.hi($scope); }
+          else if(androidCommand === command.mirror) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_2) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_3) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_4) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_5) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_6) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_7) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_8) { functionService.mirror($scope); }
+          else if(androidCommand === command.mirror_9) { functionService.mirror($scope); }
     			else if(androidCommand === command.whois) { functionService.whoIsSmartMirror($scope); }
     			else if(androidCommand === command.home) { functionService.defaultHome($scope); }
     			else if(androidCommand === command.wake) { functionService.wake($scope); }
@@ -531,7 +541,7 @@
     			else if(androidCommand === command.video) { functionService.video(); }
     			else if(androidCommand === command.lighton) { functionService.lightOn();}
     			else if(androidCommand === command.lightoff) { functionService.lightOff();}
-    			else if(androidCommand === command.musicplay) { 
+    			else if(androidCommand === command.musicplay) {
 					console.log("음악 재생");
 					functionService.musicplay();
 					$scope.isPlaying = true;
