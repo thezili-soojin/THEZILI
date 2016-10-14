@@ -288,13 +288,20 @@
             	functionService.lightOff();
             });
 
-            var track_name = ["track_1.mp3", "track_2.mp3", "track_3.mp3", "track_4.mp3", "track_5.mp3", "track_6.mp3", "track_7.mp3"
-                            , "track_8.mp3", "track_9.mp3", "track_10.mp3", "track_11.mp3", "track_12.mp3", "track_13.mp3", "track_14.mp3"];
-            var track_time = [249000, 217000, 205000, 214000, 188000, 165000, 221000, 283000, 369000, 214000, 244000, 239000, 211000, 219000];
+            var track_name = [ "track_1.mp3", "track_2.mp3", "track_3.mp3", "track_4.mp3"
+                              , "track_5.mp3", "track_6.mp3", "track_7.mp3", "track_8.mp3"
+                              , "track_9.mp3", "track_10.mp3", "track_11.mp3", "track_12.mp3", "track_13.mp3"
+                              , "track_14.mp3", "track_15.mp3", "track_16.mp3", "track_17.mp3", "track_18.mp3"
+                              , "track_19.mp3", "track_20.mp3", "track_21.mp3", "track_22.mp3", "track_23.mp3",];
+            var track_time = [22000, 138000, 139000, 243000
+                            , 195000, 167000, 229000, 231000
+                            ,201000, 214000, 244000, 239000, 211000
+                            , 219000, 249000, 217000, 205000, 214000
+                            , 188000, 165000, 221000, 283000, 369000];
             var musicCommandTimeout;
             var music_url;
             var music_cur = 0;
-            var MAX_MUSIC_COUNT = 14;
+            var MAX_MUSIC_COUNT = 23;
 
             var musicSeqPlay = function() {
 
@@ -322,8 +329,8 @@
                       }
                       musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
 
-                      if(music_cur == 14) {
-						music_cur = 0;	
+                      if(music_cur == MAX_MUSIC_COUNT) {
+						music_cur = 0;
 					  } else {
 						music_cur++;
 					  }
@@ -337,7 +344,7 @@
                   }
                 }
             }
-            
+
             var musicStop = function() {
 				    $scope.isPlaying = false;
 
@@ -346,20 +353,20 @@
       				/** Timer Cancel */
                     if(typeof musicCommandTimeout != "undefined") {
                           $timeout.cancel(musicCommandTimeout);
-                          musicCommandTimeout = null; 
-                    } 
+                          musicCommandTimeout = null;
+                    }
 			}
-            
+
             var musicPrevPlay = function() {
 				if($scope.isPlaying) {
 
 					if(music_cur == 1) {
-						music_cur = 14;	
+						music_cur = MAX_MUSIC_COUNT;
 					} else {
 						music_cur = music_cur - 2;
 					}
 					console.log("musicprev, music_cur = " + music_cur);
-                
+
 					music_url = './music/' + track_name[music_cur];
 
 					if(window.HTMLAudioElement) {
@@ -380,7 +387,7 @@
 					}
 				}
 			}
-            
+
             var musicNextPlay = function() {
 				if($scope.isPlaying) {
 
@@ -405,7 +412,7 @@
 					}
 				}
 			}
-			
+
             /** Sound Cloud */
             // 음악 재생
 
@@ -481,7 +488,7 @@
     			else if(androidCommand === command.video) { functionService.video(); }
     			else if(androidCommand === command.lighton) { functionService.lightOn();}
     			else if(androidCommand === command.lightoff) { functionService.lightOff();}
-    			else if(androidCommand === command.musicplay) { 
+    			else if(androidCommand === command.musicplay) {
 					console.log("음악 재생");
 					functionService.musicplay();
 					$scope.isPlaying = true;
