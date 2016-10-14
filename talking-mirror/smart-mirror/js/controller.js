@@ -379,19 +379,12 @@
                       }
                       musicCommandTimeout = $timeout(musicSeqPlay, track_time[music_cur]);
 
-<<<<<<< HEAD
                       if(music_cur == MAX_MUSIC_COUNT) {
           						        music_cur = 0;
           					  } else {
           						        music_cur++;
           					  }
-=======
-                      if(music_cur == 14) {
-						music_cur = 0;
-					  } else {
-						music_cur++;
-					  }
->>>>>>> e8cffc146e0cc6ae93b9b4252e648eb4e91c270c
+
                       /*
                       if($scope.musicType == "default" || $scope.musicType == "next") {
                         music_cur++;
@@ -413,7 +406,6 @@
                           $timeout.cancel(musicCommandTimeout);
                           musicCommandTimeout = null;
                     }
-<<<<<<< HEAD
 			        }
 
             var musicPrevPlay = function() {
@@ -423,18 +415,7 @@
 					         } else {
 						               music_cur = music_cur - 2;
 					         }
-=======
-			}
 
-            var musicPrevPlay = function() {
-				if($scope.isPlaying) {
-
-					if(music_cur == 1) {
-						music_cur = 14;
-					} else {
-						music_cur = music_cur - 2;
-					}
->>>>>>> e8cffc146e0cc6ae93b9b4252e648eb4e91c270c
 					console.log("musicprev, music_cur = " + music_cur);
 
 					music_url = './music/' + track_name[music_cur];
