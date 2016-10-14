@@ -23,10 +23,8 @@ var FUNCTIONSERVICE = {
 	wake : function($scope) {
 		console.debug("Wake up...");
 		require('./model/app').predicts(function(message) {
-			
 
-			
-			console.debug("predict result", message)
+			console.debug("predict result", message);
 			if(message == "[1]"){
 				config.whoyou.name = "은숙님";
 				console.debug("Face Detection value is == 1 ==!!")
