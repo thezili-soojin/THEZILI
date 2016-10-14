@@ -136,6 +136,52 @@
             	functionService.defaultHome($scope);
             }
 
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_2,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_3,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_4,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_5,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_6,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_7,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_8,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+            // 거울아 거울아 세상에서 누가 제일 이쁘니
+            AnnyangService.addCommand(command.mirror_9,function() {
+				console.debug("MirrorCtrl!!! Ok, I am Mirror");
+            	functionService.mirror($scope);
+            });
+
             // 미러는 누구니
             AnnyangService.addCommand(command.whois,function() {
             	functionService.whoIsSmartMirror($scope);
@@ -149,12 +195,16 @@
             // 홈화면으로
             AnnyangService.addCommand(command.home, defaultView);
 
-            // 미러의 화면을 끈다.
+			// 미러의 화면을 ON
+            AnnyangService.addCommand(command.hi, function() {
+            	functionService.hi($scope);
+            });
+            // 미러의 화면을 OFF.
             AnnyangService.addCommand(command.sleep, function() {
             	functionService.goSleep($scope);
             });
 
-            // 미러의 화면을 켠다.
+            // Wake Up Mirror && Face Detection.
             AnnyangService.addCommand(command.wake, function() {
             	functionService.wake($scope);
             });

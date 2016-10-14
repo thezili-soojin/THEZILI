@@ -6,12 +6,26 @@ var FUNCTIONSERVICE = {
         }
         $scope.focus = "default";
 	},
+	mirror : function($scope) {
+		console.debug("Ok, I am Mirror");
+        if(responsiveVoice.voiceSupport()) {
+          responsiveVoice.speak("오늘 구글 핵페어에 오신 당신이 가장 아름답습니다!","Korean Female");
+        }
+        $scope.focus = "default";
+	},
 	whoIsSmartMirror : function($scope) {
 		console.log("Who is Smart Mirror");
 		if(responsiveVoice.voiceSupport()) {
 	          responsiveVoice.speak("저는 당신의 생활가치를 향상 시켜주는 기능을 갖고 있는 거울아 거울아 입니다.      저의 인공지능으로 당신을 알아보고 기억하겠습니다.","Korean Female");
         }
 		$scope.focus = "whoissmartmirror";
+	},
+	hi : function($scope) {
+		console.debug("Ok, Hi I am Mirror!!");
+        if(responsiveVoice.voiceSupport()) {
+          responsiveVoice.speak("안녕하세요. 반가워요! 거울아 거울아 입니다.","Korean Female");
+        }
+        $scope.focus = "default";
 	},
 	goSleep : function($scope){
 		console.debug("Ok, going to sleep...");
@@ -94,9 +108,27 @@ var FUNCTIONSERVICE = {
             responsiveVoice.speak(config.whoyou.name + "    실시간 뉴스입니다.","Korean Female");
           }
 		
-		$('#news-div').load('https://news.google.co.kr/news?pz=1&zx=muklwsp2gkt0 .section-toptop .esc-lead-article-title .titletext',function(){
+		$('#news-div').load('https://news.google.co.kr/news?pz=1&zx=muklwsp2gkt0 .section-toptop .esc-lead-article-title .titletext',function(){			
+				
   			console.log('news loaded.');
+  			//console.log('NES!!!!!' + JSON.stringify($('#news-div')));
+  			//NES!!!!!{"0":{},"length":1,"context":{"ng339":2,"$$hashKey":"object:20"},"selector":"#news-div"}
+  			
+  			/*
+  			var objText = "";
+  			for(var i in $('#news-div')) {
+				objText = [i, $('#news-div')[i]] + "\n";
+			}
+			
+  			//console.log('objText === ' + objText);
+  			//objText === andSelf,function (a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}
+  			*/
+  			
+  			//document.getElementById("news-div").innerHTML;
+  			//console.log($('#news-div').load('https://news.google.co.kr/news?pz=1&zx=muklwsp2gkt0 .section-toptop .esc-lead-article-title .titletext'));
+  			
   		});
+  		  		
 		$scope.focus = "news";
 	},
 	playYoutube : function(term,$scope,$sce,YoutubeService) {
